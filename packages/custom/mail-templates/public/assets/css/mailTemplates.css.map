@@ -1,0 +1,1 @@
+{"version":3,"sources":["custom/mail-templates/public/assets/css/mailTemplates.css"],"names":[],"mappings":"AAAA;EACE,wBAAwB;CACzB","file":"custom/mail-templates/public/assets/css/mailTemplates.css","sourcesContent":[".mailTemplates-example h1 {\n  background-color: purple\n}\n"],"sourceRoot":"/source/"}

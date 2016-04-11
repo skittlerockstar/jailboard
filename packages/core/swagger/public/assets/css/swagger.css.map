@@ -1,0 +1,1 @@
+{"version":3,"sources":["core/swagger/public/assets/css/swagger.css"],"names":[],"mappings":"AAAA;CACC,wBAAwB;CACxB","file":"core/swagger/public/assets/css/swagger.css","sourcesContent":[".swagger-example h1: {\n\tbackground-color: purple\n}\n"],"sourceRoot":"/source/"}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["custom/i18n/public/assets/css/i18n.css"],"names":[],"mappings":"AAAA;EACE,wBAAwB;CACzB","file":"custom/i18n/public/assets/css/i18n.css","sourcesContent":[".i18n-example h1 {\n  background-color: purple\n}\n"],"sourceRoot":"/source/"}

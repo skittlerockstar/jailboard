@@ -1,0 +1,1 @@
+{"version":3,"sources":["custom/mail-templates/server/templates/example/style.css"],"names":[],"mappings":"AAAA;EACE,YAAY,EAAE","file":"custom/mail-templates/server/templates/example/style.css","sourcesContent":["h1 {\n  color: grey; }\n"],"sourceRoot":"/source/"}

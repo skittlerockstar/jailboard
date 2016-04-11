@@ -1,0 +1,1 @@
+{"version":3,"sources":["core/articles/public/assets/css/articles.css"],"names":[],"mappings":"AAAA;CACC,kBAAkB;CAClB;AACD;CACC,6BAA6B;CAC7B","file":"core/articles/public/assets/css/articles.css","sourcesContent":["h1 {\n\ttext-align: center\n}\nul.articles li:not(:last-child) {\n\tborder-bottom: 1px solid #ccc\n}\n"],"sourceRoot":"/source/"}

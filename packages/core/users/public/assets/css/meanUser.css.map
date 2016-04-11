@@ -1,0 +1,1 @@
+{"version":3,"sources":["core/users/public/assets/css/meanUser.css"],"names":[],"mappings":"AAAA;IACI,wBAAwB;CAC3B","file":"core/users/public/assets/css/meanUser.css","sourcesContent":[".meanUser-example h1 {\n    background-color: purple\n}\n"],"sourceRoot":"/source/"}
