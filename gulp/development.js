@@ -6,17 +6,20 @@ var gulp = require('gulp'),
   gutil = require('gulp-util'),
   plugins = gulpLoadPlugins(),
   coffee = require('gulp-coffee'),
+  autoprefixer = require('autoprefixer'),
+  postcss = require('gulp-postcss'),
   paths = {
     js: ['./*.js', 'config/**/*.js', 'gulp/**/*.js', 'tools/**/*.js', 'packages/**/*.js', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**', '!packages/**/assets/**/js/**'],
     html: ['packages/**/*.html', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
     css: ['packages/**/*.css', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**','!packages/core/**/public/assets/css/*.css'],
     less: ['packages/**/*.less', '!packages/**/_*.less', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
-    sass: ['packages/**/*.scss', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
-    coffee: ['packages/**/*.coffee', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**']
+    sass: ['packages/**/*.scss', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**', '!packages/**/assets/sass/motion-ui/**', '!packages/**/node-red/**'],
+    coffee: ['packages/**/*.coffee', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
+    postcss:['packages/custom/jailboard/public/assets/sass/jailboard.css']
   };
 
 /*var defaultTasks = ['clean', 'jshint', 'less', 'csslint', 'devServe', 'watch'];*/
-var defaultTasks = ['coffee','clean', 'less', 'sass', 'csslint', 'devServe', 'watch'];
+var defaultTasks = ['coffee','clean', 'less', 'sass',  'devServe', 'watch','autoprefixer'];
 
 gulp.task('env:development', function () {
   process.env.NODE_ENV = 'development';
@@ -86,13 +89,14 @@ gulp.task('coffee', function() {
 });
 
 gulp.task('watch', function () {
-  plugins.livereload.listen({interval:500});
+  //plugins.livereload.listen({interval:500});
 
-  gulp.watch(paths.coffee,['coffee']);
-  gulp.watch(paths.js, ['jshint']);
-  gulp.watch(paths.css, ['csslint']).on('change', plugins.livereload.changed);
-  gulp.watch(paths.less, ['less']);
-  gulp.watch(paths.sass, ['sass']);
+//  gulp.watch(paths.coffee,['coffee']);
+//  gulp.watch(paths.js, ['jshint']);
+//  gulp.watch(paths.css, ['csslint']).on('change', plugins.livereload.changed);
+//  gulp.watch(paths.less, ['less']);
+  //gulp.watch(paths.sass, ['sass']);
+  //gulp.watch(paths.postcss, ['autoprefixer']);
 });
 
 function count(taskName, message) {
@@ -108,5 +112,15 @@ function count(taskName, message) {
   }
   return through(countFiles, endStream);
 }
+gulp.task('autoprefixer',['sass'], function () {
+    var postcss      = require('gulp-postcss');
+    var sourcemaps   = require('gulp-sourcemaps');
+    var autoprefixer = require('autoprefixer');
 
+    return gulp.src(paths.postcss)
+        .pipe(sourcemaps.init())
+        .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('./packages/custom/jailboard/public/assets/css'));
+});
 gulp.task('development', defaultTasks);

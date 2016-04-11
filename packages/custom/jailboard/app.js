@@ -9,23 +9,26 @@ var Jailboard = new Module('jailboard');
 var RED = require('./node-red/red/red');
 var sass = require('node-sass');
 var fs = require('fs');
+var autoprefixer = require('autoprefixer');
 /*
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
 Jailboard.register(function(app, auth, database, http) {
-var sass = require('node-sass');
-sass.render({
-  file: '/home/max/Public/workdir/jailboard/packages/custom/jailboard/public/assets/sass/jailboard.scss',
-  outFile:'/home/max/Public/workdir/jailboard/packages/custom/jailboard/public/assets/css/jailboard.css'
-}, function(err, result) { 
-    console.log(err);
-     fs.writeFile('/home/max/Public/workdir/jailboard/packages/custom/jailboard/public/assets/css/jailboard.css', result.css, function(err){
-        if(!err){
-          console.log('tio');
-        }
-      });
-});
+//var sass = require('node-sass');
+//sass.render({
+//  file: '/home/max/Public/workdir/jailboard/packages/custom/jailboard/public/assets/sass/jailboard.scss',
+//  outFile:'/home/max/Public/workdir/jailboard/packages/custom/jailboard/public/assets/css/jailboard.css'
+//}, function(err, result) { 
+//    console.log(err);
+//     fs.writeFile('/home/max/Public/workdir/jailboard/packages/custom/jailboard/public/assets/css/jailboard.css', result.css, function(err){
+//        if(!err){
+//          console.log('Once upon a time there were no errors( jailboard app )');
+//        }else{
+//            
+//        }
+//      });
+//});
 
 //console.log(http);
   //We enable routing. By default the Package Object is passed to the routes
@@ -39,8 +42,8 @@ sass.render({
     menu: 'main'
   });
   Jailboard.menus.add({
-    title: 'jailboard',
-    link: 'jailboard',
+    title: 'Jailboard',
+    link: 'Jailboard',
     roles: ['authenticated'],
     menu: 'main'
   });

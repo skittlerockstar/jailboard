@@ -28,5 +28,13 @@
         res.send(html);
       });
     });
+    app.get('/', function (req, res, next) {
+      Jailboard.render('index', {
+        package: 'jailboard'
+      }, function (err, html) {
+        //Rendering a view from the Package server/views
+        res.send(html);
+      });
+    });
   };
 })();

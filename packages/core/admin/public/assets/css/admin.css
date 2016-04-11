@@ -1,7 +1,7 @@
 #admin-menu {
-    z-index:1;
+    z-index:99;
     position: fixed;
-    background-color: #176583;
+    background-color: #39aadf;
     height: 100%;
     top: 50px;
     width: 60px;
@@ -12,9 +12,9 @@
     background-color: #103c4d;
 }
 
-#admin-menu .nav , #admin-menu .open-icon, #admin-menu .wrapper-ninja {
+#admin-menu .nav , #admin-menu .open-icon, #admin-menu .wrapper-logo {
     width: 60px;
-    background-color: #176583;
+    background-color: #39aadf;
     -webkit-transition-duration: 0.5s;
     -moz-transition-duration: 0.5s;
     -o-transition-duration: 0.5s;
@@ -32,7 +32,70 @@
 }
 
 #admin-menu ul li {
-    border-bottom: solid 1px #217D99;
+    border-bottom: solid 1px #39aadf;
+}
+#admin-menu ul li span{
+    font-size:25px;
+    color:white;
+    z-index:5;
+}
+#admin-menu ul li .showbox.header{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:white;
+    line-height: 3;
+        width: 100%;
+        border:none;
+    left: 0px;
+ 
+}
+#admin-menu .nav > li.title > a:hover{
+    background-color: inherit;
+}
+#admin-menu li.title .glyphicon{
+  color:whitesmoke !important;
+   text-shadow:-1px 1px 1px gray;
+}
+.showbox.header h5{
+    border:none;
+       width:100%;
+       font-size:0;
+        -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    -ms-transition-duration: 0.5s;
+    transition-property: font-size, opacity,margin;
+    margin-top:0;
+    opacity: 0;
+    vertical-align: central;
+    text-align: center;
+}
+.opened .showbox.header  h5{
+    width: 100%;
+    line-height: 1.5;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    -ms-transition-duration: 0.5s;
+    transition-property: font-size,opacity;
+    font-size: 24px;
+    text-align: center;
+    margin-left:15px;
+    margin-top:4px;
+    opacity:.9;
+   color:whitesmoke !important;
+   text-shadow:-1px 1px 0px gray;
+}
+.opened .showbox.header  h5 span{
+    left:2px;
+    top:7px;
+}
+ .showbox.header  h5 .glyphicon{
+    left:-3px;
+    top:10px;
+}
+#admin-menu ul li.title{
+    height:50px;
+    
 }
 
 #admin-menu .stable .showbox {
@@ -49,32 +112,36 @@
     font-size: 0;
     color: #89D7F3;
     cursor: pointer;
-    background-color: #176583;
+    background-color: #39aadf;
     border-bottom: solid 1px #217D99;
 }
 
-#admin-menu .opened .nav, #admin-menu .opened .wrapper-ninja , #admin-menu .opened .open-icon {
+#admin-menu .opened .nav, #admin-menu .opened .wrapper-logo , #admin-menu .opened .open-icon {
   width: 250px;
 }
 #admin-menu .opened .showbox {
     font-size: inherit;
 }
 
-#admin-menu .wrapper-ninja {
+#admin-menu .wrapper-logo {
     height: 100%;
     position: fixed;
 }
 
-#admin-menu .opened .ninja {
+#admin-menu .opened .logo {
     position:absolute;
-    width: 287px;
+    width: 250px;
 }
-#admin-menu .ninja {
+#admin-menu .logo {
     width: 0;
     height: 305px;
-    background: url(/admin/assets/img/ninja/ninja.png) no-repeat;
+    background: url(/admin/assets/img/logo.png) no-repeat;
+    background-size: 60%;
     position: absolute;
     bottom: 60px;
+    margin-left:40px;
+    opacity:.8;
+    margin-right:20px;
     left: 0px;
     -webkit-transition-duration: 0.4s;
     -moz-transition-duration: 0.5s;
@@ -118,7 +185,7 @@ span.editable-wrapper input {
     border: solid 1px rgb(232, 228, 225);
     border-top: none;
     padding: 10px 0;
-    border-left: solid 3px #176583;
+    border-left: solid 3px #39aadf;
 }
 
 #modules-tab .wrapper .module .name {
@@ -136,3 +203,5 @@ span.editable-wrapper input {
 
 
 
+
+/*# sourceMappingURL=admin.css.map */

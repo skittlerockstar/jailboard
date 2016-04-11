@@ -26,28 +26,28 @@ Admin.register(function(app, auth, database, circles) {
         roles: ['admin'],
         title: 'MODULES',
         link: 'modules',
-        icon: icons + 'modules.png',
+        icon:  'th',
         menu: 'admin'
     });
-    Admin.menus.add({
-        roles: ['admin'],
-        title: 'THEMES',
-        link: 'themes',
-        icon: icons + 'themes.png',
-        menu: 'admin'
-    });
+//    Admin.menus.add({
+//        roles: ['admin'],
+//        title: 'THEMES',
+//        link: 'themes',
+//        icon: icons + 'themes.png',
+//        menu: 'admin'
+//    });
     Admin.menus.add({
         roles: ['admin'],
         title: 'SETTINGS',
         link: 'settings',
-        icon: icons + 'settings.png',
+        icon: 'cog',
         menu: 'admin'
     });
     Admin.menus.add({
         roles: ['admin'],
         title: 'USERS',
         link: 'users',
-        icon: icons + 'users.png',
+        icon: 'user',
         menu: 'admin'
     });
 

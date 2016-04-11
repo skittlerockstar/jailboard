@@ -3,16 +3,25 @@
 
   angular
     .module('mean.jailboard')
-    .config(jailboard);
+    .config(jailboard).config(['$viewPathProvider', function($viewPathProvider) {
+  $viewPathProvider.override('system/views/index.html', 'jailboard/views/index.html');
+}]);
 
   jailboard.$inject = ['$stateProvider'];
 
   function jailboard($stateProvider) {
-    $stateProvider.state('jailboard', {
-      url: '/jailboard/example',
-      templateUrl: 'jailboard/views/index.html',
+    $stateProvider.state('Jailboard', {
+      url: '/Jailboard',
+      templateUrl: './jailboard/views/index.html',
       requiredCircles: {
           circles: ['admin']
+        }
+    });
+    $stateProvider.state('index', {
+      url: '/',
+      templateUrl: './jailboard/views/index.html',
+      requiredCircles: {
+          circles: []
         }
     });
     $stateProvider.state('Node red', {

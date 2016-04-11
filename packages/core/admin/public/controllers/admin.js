@@ -17,6 +17,7 @@ angular.module('mean.admin').controller('AdminController', ['$scope', 'Global', 
                 defaultMenu: defaultMenu
             }, function(menu) {
                 $scope.menus[name] = menu;
+                console.log(defaultAdminMenu);
             });
         }
 

@@ -1,0 +1,24 @@
+<section id="jailboardControllPanel"  ng-controller="CtrlPanelController" >
+<!--    //IN Sources
+    //IN Add Panel
+    //IN Load / save
+    //IN Settings
+    //IN plotly
+    //IN Customizer ( dragabble size )
+    //IN Customize Toolbar Pos
+    //IN Customize ColorScheme-->
+
+    <div id="JailboardBar" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]">
+        <div id="barController" class="scale-out-down fast" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]" ng-click="collapsed =!collapsed;" >
+                <span class="glyphicon glyphicon-wrench"></span> 
+        </div>
+        <div class="dropControllerContainer scale-out-up fast" ng-class="{false:'up bounce-out mui-leave  mui-leave-active', true:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]">
+        <div class="dropController" ng-click="collapsed =!collapsed;">
+    <span class="glyphicon glyphicon-wrench"></span> 
+            </div>
+</div>
+        
+    </div>
+<section id="panelContainer" ng-class="{false:'down mui-leave bounce-out  mui-leave-active', true:'up mui-enter bounce-out  mui-enter-active'}[collapsed]" data-ng-include="'/jailboard/views/includes/panelboard.html'"></section>
+
+</section>

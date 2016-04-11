@@ -17,5 +17,5 @@
 .popover-title { display: none; }
 
 div.btn-group, a.btn {
-   @include disable-selection;
+  // @include disable-selection;
 }
