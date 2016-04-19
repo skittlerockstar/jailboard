@@ -30,10 +30,10 @@ Admin.register(function(app, auth, database, circles) {
         menu: 'admin'
     });
 //    Admin.menus.add({
-//        roles: ['admin'],
+//        roles: ['developer'],
 //        title: 'THEMES',
 //        link: 'themes',
-//        icon: icons + 'themes.png',
+//        icon: 'cog',
 //        menu: 'admin'
 //    });
     Admin.menus.add({

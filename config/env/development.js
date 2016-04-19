@@ -13,7 +13,8 @@ module.exports = {
   },
   hostname: 'http://localhost:3000',
   app: {
-    name: 'De-wire the city ! '
+    name: 'De-wire the city !',
+    title:'title'
   },
   strategies: {
     local: {

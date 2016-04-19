@@ -30,7 +30,7 @@ module.exports = function(System, app, auth, database) {
 
             if (menu !== 'main') return res.json(items);
 
-
+//TODO look for a way to fix this shit
             items.forEach(function(item) {
                 if (tmpMenu && tmpMenu === 'modules' && item.roles.indexOf('admin') > -1) itemsRes.push(item);
                 else if (!tmpMenu && menu === 'main'){

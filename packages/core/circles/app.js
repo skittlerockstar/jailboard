@@ -25,7 +25,7 @@ Circles.register(function(app, auth, database) {
   Circles.menus.add({
     title: 'Circles',
     link: 'manage circles',
-    roles: ['authenticated', 'admin'],
+    roles: ['developer'],
     menu: 'main'
   });
 

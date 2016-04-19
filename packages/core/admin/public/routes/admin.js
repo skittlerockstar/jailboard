@@ -9,13 +9,13 @@ angular.module('mean.admin').config(['$stateProvider', '$urlRouterProvider',
           circles: ['admin']
         }
       })
-//              .state('themes', {
-//        url: '/admin/themes',
-//        templateUrl: 'admin/views/themes.html',
-//        requiredCircles: {
-//          circles: ['admin']
-//        }
-//      })
+              .state('themes', {
+        url: '/admin/themes',
+        templateUrl: 'admin/views/themes.html',
+        requiredCircles: {
+          circles: ['admin']
+        }
+      })
               .state('settings', {
         url: '/admin/settings',
         templateUrl: 'admin/views/settings.html',
