@@ -20,7 +20,6 @@ module.exports = function(System, app, auth, database) {
 
 
             if (!Array.isArray(defaultMenu)) defaultMenu = [defaultMenu];
-            console.log(menu);
             var items = mean.menus.get({
                 roles: roles,
                 menu: menu,
@@ -33,9 +32,19 @@ module.exports = function(System, app, auth, database) {
 
 
             items.forEach(function(item) {
-                console.log(item);
                 if (tmpMenu && tmpMenu === 'modules' && item.roles.indexOf('admin') > -1) itemsRes.push(item);
-                else if (!tmpMenu && menu === 'main' && item.roles.indexOf('admin') <= 0) itemsRes.push(item);
+                else if (!tmpMenu && menu === 'main'){
+                    var add = false;
+                    roles.forEach(function(e,i){
+                        if(item.roles.indexOf(e) > -1){
+                            add = true;
+                        }
+                    });
+                    if(add){
+                        itemsRes.push(item);
+                    }
+                    add = false;
+                };
             });
             res.json(itemsRes);
 

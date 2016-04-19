@@ -6,9 +6,11 @@
     "name": "mean scaffold"
   },
   "mean": "0.5.5",
-  "dependencies": {},
+  "dependencies": {
+    "plotly.js": "^1.8.0"
+  },
   "license": "MIT",
   "scripts": {
-    "postinstall" : "bower install"
+    "postinstall": "bower install"
   }
 }

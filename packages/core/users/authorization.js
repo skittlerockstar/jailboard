@@ -34,19 +34,12 @@ exports.requiresLogin = function(req, res, next) {
  */
 exports.requiresAdmin = function(req, res, next) {
   if (!req.isAuthenticated()) {
-      console.log('not');
-    return res.status(401).send('Users is not authorized');
+    return res.status(401).send('User is not authorized');
   }
   findUser(req.user._id, function(user) {
-      if (!user){
-          console.log('not');
-          return res.status(401).send('Userss is not authorized');
-      }
-      
-      if (req.user.roles.indexOf('admin') === -1){
-          console.log('not');
-          return res.status(401).send('Userss is not authorized');
-      }
+      if (!user) return res.status(401).send('User is not authorized');
+
+      if (req.user.roles.indexOf('admin') === -1) return res.status(401).send('User is not authorized');
       req.user = user;
       next();
   });

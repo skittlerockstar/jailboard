@@ -6,13 +6,14 @@
     .module('mean.jailboard')
     .controller('JailboardController', JailboardController);
 
-  JailboardController.$inject = ['$scope', 'Global', 'Jailboard'];
+  JailboardController.$inject = ['$scope', 'Global', 'Jailboard','MeanUser','$http'];
   
-  function JailboardController($scope, Global, Jailboard) {
-  
+  function JailboardController($scope, Global, Jailboard ,MeanUser, $http) {
       $scope.global = Global;
-    $scope.package = {
-      name: 'jailboard'
-    };
+        $scope.package = {
+          name: 'jailboasrd'
+        };
+        
   }
+
 })();

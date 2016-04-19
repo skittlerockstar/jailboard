@@ -13,7 +13,6 @@ process.env.NODE_ENV = 'test';
 gulp.task('test', ['startServer', 'stopServer']);
 gulp.task('startServer', function(done) {
   var promise = require('../server.js');
-
   promise.then(function(app){done();});
 });
 gulp.task('stopServer', ['runKarma'], function() {

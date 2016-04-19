@@ -50,7 +50,7 @@
                     <i class="icon-trash icon-white"></i>
                 </button>
             </td>
-            <td class="table-editable-cell" data-ng-repeat="field in userSchema" data-ng-if="field.inTable">
+            <td class="table-editable-cell" data-ng-repeat="field in userSchema" data-ng-if="field.inTable" >
                 <span data-ng-if="(field['type'] == 'text' || field['type'] == 'email')" class="editable-span" data-ng-editable="update(user)" data-ng-editable-model="user[field['schemaKey']]"></span>
                 <span data-ng-click="beforeSelect(field['schemaKey'], user)" data-ng-if="(field['type'] == 'select')" class="editable-span" data-ng-editable-select="update(user, field['schemaKey'])" data-ng-editable-select-model="user[field['schemaKey']]" data-ng-editable-select-options="field['options']">
                 </span>

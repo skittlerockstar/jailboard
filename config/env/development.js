@@ -13,10 +13,13 @@ module.exports = {
   },
   hostname: 'http://localhost:3000',
   app: {
-    name: 'MEAN - A Modern Stack - Development'
+    name: 'De-wire the city ! '
   },
   strategies: {
     local: {
+      enabled: true
+    },
+    socialEnabled: {
       enabled: true
     },
     landingPage: '/',
@@ -24,31 +27,31 @@ module.exports = {
       clientID: 'DEFAULT_APP_ID',
       clientSecret: 'APP_SECRET',
       callbackURL: 'http://localhost:3000/api/auth/facebook/callback',
-      enabled: true
+      enabled: false
     },
     twitter: {
       clientID: 'DEFAULT_CONSUMER_KEY',
       clientSecret: 'CONSUMER_SECRET',
       callbackURL: 'http://localhost:3000/api/auth/twitter/callback',
-      enabled: true
+      enabled: false
     },
     github: {
       clientID: 'DEFAULT_APP_ID',
       clientSecret: 'APP_SECRET',
       callbackURL: 'http://localhost:3000/api/auth/github/callback',
-      enabled: true
+      enabled: false
     },
     google: {
       clientID: 'DEFAULT_APP_ID',
       clientSecret: 'APP_SECRET',
       callbackURL: 'http://localhost:3000/api/auth/google/callback',
-      enabled: true
+      enabled: false
     },
     linkedin: {
       clientID: 'DEFAULT_API_KEY',
       clientSecret: 'SECRET_KEY',
       callbackURL: 'http://localhost:3000/api/auth/linkedin/callback',
-      enabled: true
+      enabled: false
     }
   },
   emailFrom: 'SENDER EMAIL ADDRESS', // sender address like ABC <abc@example.com>

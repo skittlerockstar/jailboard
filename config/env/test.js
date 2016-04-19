@@ -17,7 +17,7 @@ module.exports = {
   },
   strategies: {
     local: {
-      enabled: true
+      enabled: false
     },
     landingPage: '/',
     facebook: {

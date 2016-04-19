@@ -7,6 +7,7 @@
   $viewPathProvider.override('system/views/index.html', 'jailboard/views/index.html');
 }]);
 
+
   jailboard.$inject = ['$stateProvider'];
 
   function jailboard($stateProvider) {
@@ -14,14 +15,21 @@
       url: '/Jailboard',
       templateUrl: './jailboard/views/index.html',
       requiredCircles: {
-          circles: ['admin']
+          circles: ['topkek']
         }
     });
     $stateProvider.state('index', {
-      url: '/',
+      url: '/auth/login',
       templateUrl: './jailboard/views/index.html',
       requiredCircles: {
-          circles: []
+          circles: ['admin']
+        }
+    });
+    $stateProvider.state('redirect', {
+      url: '/rdr',
+      templateUrl: './jailboard/views/rdr.html',
+      requiredCircles: {
+          circles: ['topkek']
         }
     });
     $stateProvider.state('Node red', {
@@ -29,7 +37,7 @@
       templateUrl: '/api/jailboard',
       href:'http://localhost:3000/api/jailboard/red',
       requiredCircles: {
-          circles: ['admin']
+          circles: ['admin','authorized']
         }
     });
   }

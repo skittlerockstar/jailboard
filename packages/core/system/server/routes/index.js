@@ -10,7 +10,7 @@ module.exports = function(System, app, auth, database) {
     .get(index.render);
   app.route('/api/aggregatedassets')
     .get(index.aggregatedList);
-
+  
   app.get('/*',function(req,res,next){
         res.header('workerID' , JSON.stringify(mean.options.workerid) );
         next(); // http://expressjs.com/guide.html#passing-route control
@@ -18,7 +18,6 @@ module.exports = function(System, app, auth, database) {
 
   app.get('/api/get-public-config', function(req, res){
     var config = mean.loadConfig();
-
     return res.send(config.public);
   });
 };
