@@ -8,14 +8,16 @@ var mongoose = require('mongoose'),
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
   LinkedinStrategy = require('passport-linkedin').Strategy,
   User = mongoose.model('User'),
-  config = require('meanio').loadConfig();
+  config = require('meanio').loadConfigNew();
 
 module.exports = function(passport) {
   // Serialize the user id to push into the session
   passport.serializeUser(function(user, done) {
     done(null, user.id);
   });
-
+  //CUSTOM
+  //UNFLATTEN JSON
+   
   // Deserialize the user object based on a pre-serialized token
   // which is the user id
   passport.deserializeUser(function(id, done) {

@@ -23,13 +23,12 @@ module.exports = function(Admin, app, auth, database) {
         themes.defaultTheme(req, res, gfs);
     });
 
-    app.get('/api/admin/modules', auth.requiresAdmin, function(req, res) {
-	    //var modules = mean.exportable_modules_list;
-	    //res.jsonp(modules);
-	    //for (var index in mean.resolved) {
-		 //   //console.log(mean.resolved);
-		 //   if (mean.resolved[index].result) console.log(mean.resolved[index].result.loadedmodule);
-	    //}
+    app.get('/api/admin/modules', function(req, res) {
+	    var modules = mean.exportable_modules_list;
+	    res.jsonp(modules);
+	    for (var index in mean.resolved) {
+//		    if (mean.resolved[index].result) console.log(mean.resolved[index].result.loadedmodule);
+	    }
     });
 
     var settings = require('../controllers/settings');

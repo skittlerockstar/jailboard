@@ -1,10 +1,9 @@
 'use strict';
 
-var config = require('meanio').loadConfig();
+var config = require('meanio').loadConfigNew();
 var jwt = require('jsonwebtoken'); //https://npmjs.org/package/node-jsonwebtoken
 
 module.exports = function(MeanUser, app, auth, database, passport) {
-
   // User routes use users controller
   var users = require('../controllers/users')(MeanUser);
   app.route('/api/login')
@@ -25,7 +24,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         res.send(user ? user : '0');
       });
     });
-
+  //  console.log(config);
   if(config.strategies.local.enabled)
   {
       // Setting up the users api

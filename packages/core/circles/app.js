@@ -25,7 +25,7 @@ Circles.register(function(app, auth, database) {
   Circles.menus.add({
     title: 'Circles',
     link: 'manage circles',
-    roles: ['developer'],
+    roles: ['authenticated', 'admin'],
     menu: 'main'
   });
 
@@ -58,7 +58,7 @@ function registerCircle(name, parents) {
         upsert: true
       }, function(err) {
         if (err) {
-          console.log(err);
+          //console.log(err);
         }
       });
     }

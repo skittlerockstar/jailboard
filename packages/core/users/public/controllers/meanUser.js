@@ -19,7 +19,6 @@ angular.module('mean.users')
                             if ($scope.secLogin) {
                                 if (!$.isEmptyObject(config)) {
                                     $scope.socialButtons = config;
-                                    console.log(config);
                                     $scope.socialButtonsCounter = Object.keys(config).length;
                                 }else{
                                     $scope.secLogin = false;

@@ -38,12 +38,12 @@ Jailboard.register(function(app, auth, database, http) {
   Jailboard.routes(app, auth, database, http);
   //console.log(RED);
   //We are adding a link to the main menu for all authenticated users
-  Jailboard.menus.add({
-    title: 'NODERED',
-    href:'api/jailboard/red',
-    roles: ['admin','developer'],
-    menu: 'main',
-  });
+//  Jailboard.menus.add({
+//    title: 'NODERED',
+//    href:'api/jailboard/red',
+//    roles: ['admin','developer'],
+//    menu: 'main',
+//  });
   Jailboard.menus.add({
     title: 'Jailboard',
     link: 'Jailboard',
@@ -77,27 +77,27 @@ app.use(settings.httpAdminRoot,RED.httpAdmin);
 // Serve the http nodes UI from /api
 app.use(settings.httpNodeRoot,RED.httpNode);
 app.set('views', __dirname + '/server/views');
-  /**
-    //Uncomment to use. Requires meanio@0.3.7 or above
-    // Save settings with callback
-    // Use this for saving data from administration pages
-    Jailboard.settings({
-        'someSetting': 'some value'
-    }, function(err, settings) {
-        //you now have the settings object
-    });
-
-    // Another save settings example this tme with no callback
-    // This writes over the last settings.
-    Jailboard.settings({
-        'anotherSettings': 'some value'
-    });
-
-    // Get settings. Retrieves latest saved settigns
-    Jailboard.settings(function(err, settings) {
-        //you now have the settings object
-    });
-    */
+//  /**
+//    //Uncomment to use. Requires meanio@0.3.7 or above
+//    // Save settings with callback
+//    // Use this for saving data from administration pages
+//    Jailboard.settings({
+//        'someSetting': 'some value'
+//    }, function(err, settings) {
+//        //you now have the settings object
+//    });
+//
+//    // Another save settings example this tme with no callback
+//    // This writes over the last settings.
+//    Jailboard.settings({
+//        'anotherSettings': 'some value'
+//    });
+//
+//    // Get settings. Retrieves latest saved settigns
+//    Jailboard.settings(function(err, settings) {
+//        //you now have the settings object
+//    });
+//    */
 RED.start();
   return Jailboard;
 });
