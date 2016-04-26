@@ -17,7 +17,12 @@ module.exports = function(System, app, auth, database) {
   });
 
   app.get('/api/get-public-config', function(req, res){
+      
     var config = mean.loadConfigNew();
+    
+    mean.config.getSettings(req.query.name,config, function(error, doc) {
+//        config = doc.settings;
+    });
     return res.send(config.public);
   });
 };
