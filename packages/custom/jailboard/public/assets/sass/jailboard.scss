@@ -12,7 +12,7 @@ and open the template in the editor.
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic);
 /*@import 'colorscheme';*/
 /*$boardcolor:*/
-$boardheight:500px;
+$boardheight:350px;
 body{
     background-color:whitesmoke;
 }
@@ -20,7 +20,7 @@ body{
     position:fixed;
     z-index:90;
     width:100%;
-    top:15px;
+    top:25px;
     left:0;
     background-color:white;
     transition-property:background-color;

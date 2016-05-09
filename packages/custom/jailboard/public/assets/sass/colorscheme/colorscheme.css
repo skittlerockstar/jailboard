@@ -7,4 +7,14 @@ and open the template in the editor.
     Created on : Apr 5, 2016, 1:13:45 PM
     Author     : max
 */
+* {
+  transition-duration: 200ms;
+  transition-property: all;
+  cursor: default;
+  font-family: 'Ubuntu', sans-serif; }
 
+h1, h2, h3, h4, h5, h6 {
+  color: #666; }
+
+.glyphicon {
+  cursor: pointer; }

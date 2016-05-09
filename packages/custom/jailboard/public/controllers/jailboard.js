@@ -13,7 +13,6 @@
         $scope.package = {
           name: 'jailboasrd'
         };
-        
   }
 
 })();

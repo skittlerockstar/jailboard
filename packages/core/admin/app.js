@@ -24,9 +24,18 @@ Admin.register(function(app, auth, database, circles) {
 
     Admin.menus.add({
         roles: ['admin'],
+        title: 'BOARDS',
+        link: 'boards',
+        icon:  'th-large',
+        menu: 'admin'
+    });
+
+    
+    Admin.menus.add({
+        roles: ['admin'],
         title: 'MODULES',
         link: 'modules',
-        icon:  'th',
+        icon:  'list-alt',
         menu: 'admin'
     });
 //    Admin.menus.add({

@@ -4,10 +4,31 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : Mar 31, 2016, 2:58:54 PM
+    Created on : Apr 28, 2016, 10:59:50 AM
+    Author     : max
+*/
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 5, 2016, 1:13:45 PM
     Author     : max
 */
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic);
+* {
+  transition-duration: 200ms;
+  transition-property: all;
+  cursor: default;
+  font-family: 'Ubuntu', sans-serif; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #666; }
+
+.glyphicon {
+  cursor: pointer; }
+
 .slide-in-down.mui-enter {
   transition-duration: 500ms;
   transition-timing-function: linear;
@@ -643,218 +664,153 @@ and open the template in the editor.
   -webkit-animation-delay: 700ms !important;
           animation-delay: 700ms !important; }
 
-/*@import 'colorscheme';*/
-/*$boardcolor:*/
-body {
-  background-color: whitesmoke; }
-
-#jailboardControllPanel {
-  position: fixed;
-  z-index: 90;
-  width: 100%;
-  top: 25px;
-  left: 0;
-  background-color: white;
-  transition-property: background-color;
-  transition-duration: 500ms;
-  height: 100%; }
-  #jailboardControllPanel.down {
-    background-color: #F0F0F0; }
-
-#JailboardBar {
-  width: 100%;
-  height: 350px;
-  background-color: white;
-  border-bottom: solid 10px #e20613;
-  box-shadow: 0px 0px 0px black; }
-  #JailboardBar .glyphicon-wrench:hover {
-    text-shadow: 0px 0px 5px white; }
-  #JailboardBar.down {
-    transition-property: box-shadow;
-    box-shadow: 0px 0px 5px black; }
-
-#JailboardBar {
+#boardFormInclude {
   position: relative;
-  z-index: 99; }
-
-#JailboardBar.down.mui-enter {
-  transition-duration: 500ms;
-  transition-timing-function: linear;
-  -webkit-transform: translateY(-80%);
-          transform: translateY(-80%);
-  transition-property: opacity, -webkit-transform;
-  transition-property: transform, opacity;
-  transition-property: transform, opacity, -webkit-transform;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden; }
-
-#JailboardBar.down.mui-enter.mui-enter-active {
-  -webkit-transform: translateY(0);
-          transform: translateY(0); }
-
-#JailboardBar.up.mui-leave {
-  transition-duration: 500ms;
-  transition-timing-function: linear;
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
-  transition-property: opacity, -webkit-transform;
-  transition-property: transform, opacity;
-  transition-property: transform, opacity, -webkit-transform;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden; }
-
-#JailboardBar.up.mui-leave.mui-leave-active {
-  -webkit-transform: translateY(-93%);
-          transform: translateY(-93%); }
-
-#barController {
-  position: absolute;
-  margin-left: -30px;
-  bottom: -10px;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 30px 30px 30px;
-  border-color: transparent transparent #e20613; }
-  #barController .glyphicon {
-    top: 8px;
-    left: -8px;
-    cursor: pointer;
-    color: white; }
-  #barController.up.mui-leave {
-    transition-duration: 500ms;
-    transition-timing-function: linear;
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-    transition-property: opacity, -webkit-transform;
-    transition-property: transform, opacity;
-    transition-property: transform, opacity, -webkit-transform;
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden; }
-  #barController.up.mui-leave.mui-leave-active {
-    -webkit-transform: translateY(-100%);
-            transform: translateY(-100%); }
-  #barController.down.mui-enter {
-    transition-duration: 500ms;
-    transition-timing-function: linear;
-    -webkit-transform: translateY(100%);
-            transform: translateY(100%);
-    transition-property: opacity, -webkit-transform;
-    transition-property: transform, opacity;
-    transition-property: transform, opacity, -webkit-transform;
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden; }
-  #barController.down.mui-enter.mui-enter-active {
-    -webkit-transform: translateY(0);
-            transform: translateY(0); }
-
-.dropControllerContainer {
-  width: 100%;
-  height: 10px;
-  background-color: #39aadf;
-  position: absolute;
-  bottom: -20px;
-  z-index: 1; }
-  .dropControllerContainer .dropController {
-    position: absolute;
-    margin-left: -30px;
-    bottom: -20px;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 30px 30px 0px 30px;
-    border-color: #39aadf transparent transparent; }
-    .dropControllerContainer .dropController .glyphicon {
-      top: -25px;
-      left: -5px;
-      cursor: pointer;
+  z-index: 10;
+  height: 0; }
+  #boardFormInclude.yes {
+    opacity: 1;
+    z-index: 999;
+    transition-property: opacity;
+    pointer-events: all; }
+  #boardFormInclude.no {
+    opacity: 0;
+    z-index: -1;
+    transition-property: opacity;
+    pointer-events: none; }
+  #boardFormInclude .panelBar {
+    height: 40px;
+    background-color: gray;
+    border-radius: 5px 5px 0 0; }
+    #boardFormInclude .panelBar .title {
+      font-size: 20px;
+      color: white;
+      line-height: 40px;
+      padding-left: 15px; }
+    #boardFormInclude .panelBar .right {
+      float: right;
+      height: 40px;
+      width: 40px;
+      font-size: 18px;
+      line-height: 40px;
       color: white; }
-  .dropControllerContainer.up.mui-enter {
-    transition-duration: 500ms;
-    transition-timing-function: linear;
-    -webkit-transform: translateY(150%);
-            transform: translateY(150%);
-    transition-property: opacity, -webkit-transform;
-    transition-property: transform, opacity;
-    transition-property: transform, opacity, -webkit-transform;
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden; }
-  .dropControllerContainer.up.mui-enter.mui-enter-active {
-    -webkit-transform: translateY(0);
-            transform: translateY(0); }
-  .dropControllerContainer.down.mui-enter {
-    transition-duration: 500ms;
-    transition-timing-function: linear;
-    -webkit-transform: translateY(-150%);
-            transform: translateY(-150%);
-    transition-property: opacity, -webkit-transform;
-    transition-property: transform, opacity;
-    transition-property: transform, opacity, -webkit-transform;
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden; }
-  .dropControllerContainer.down.mui-enter.mui-enter-active {
-    -webkit-transform: translateY(0);
-            transform: translateY(0); }
+      #boardFormInclude .panelBar .right:hover {
+        color: red;
+        cursor: pointer; }
 
-#panelContainer {
-  position: relative;
-  height: 350px;
-  bottom: 350px;
-  margin-top: 60px;
-  transition-property: all !important; }
-  #panelContainer.up.mui-enter {
-    transition-duration: 500ms;
-    transition-timing-function: linear;
-    -webkit-transform: translateY(95%);
-            transform: translateY(95%);
-    transition-property: opacity, -webkit-transform;
-    transition-property: transform, opacity;
-    transition-property: transform, opacity, -webkit-transform;
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden; }
-  #panelContainer.up.mui-enter.mui-enter-active {
-    -webkit-transform: translateY(0);
-            transform: translateY(0); }
-  #panelContainer.down {
-    margin-top: 50px; }
-    #panelContainer.down.mui-leave {
-      transition-duration: 500ms;
-      transition-timing-function: linear;
-      -webkit-transform: translateY(0);
-              transform: translateY(0);
-      transition-property: opacity, -webkit-transform;
-      transition-property: transform, opacity;
-      transition-property: transform, opacity, -webkit-transform;
-      -webkit-backface-visibility: hidden;
-              backface-visibility: hidden; }
-    #panelContainer.down.mui-leave.mui-leave-active {
-      -webkit-transform: translateY(90%);
-              transform: translateY(90%); }
-  #panelContainer .title {
-    font-family: 'Ubuntu', sans-serif;
-    font-weight: 100;
-    color: #505050; }
-
-#overlay {
+#boardFormContainer {
   width: 100%;
-  position: fixed;
-  background-color: white;
-  height: 100%;
-  top: 0;
-  z-index: 999; }
-  #overlay.show {
-    transition-property: all !important; }
-    #overlay.show.mui-leave {
-      transition-duration: 500ms;
-      transition-timing-function: linear;
-      transition-duration: 100;
-      opacity: 1;
-      transition-property: opacity; }
-    #overlay.show.mui-leave.mui-leave-active {
-      opacity: 0; }
-  #overlay.mui-leave-active {
-    height: 0; }
+  padding: 20px;
+  border-radius: 0px 0px 5px 5px;
+  box-shadow: 0px 0px 10px gray;
+  background-color: white; }
 
-/*# sourceMappingURL=jailboard.css.map */
+#boardManager .boardcontainer {
+  width: 240px;
+  height: 240px;
+  float: left;
+  padding: 10px; }
+  #boardManager .boardcontainer .name {
+    width: 200px; }
+  #boardManager .boardcontainer .board {
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    border: solid 1px gray;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px gray;
+    transition-property: box-shadow; }
+    #boardManager .boardcontainer .board * {
+      transition-property: all;
+      transition-duration: 200ms; }
+    #boardManager .boardcontainer .board.add:hover {
+      box-shadow: 0px 0px 5px #39aadf; }
+      #boardManager .boardcontainer .board.add:hover .addBoard {
+        cursor: pointer;
+        background-color: gray;
+        transition-property: background-color;
+        transition-duration: 300ms; }
+        #boardManager .boardcontainer .board.add:hover .addBoard span {
+          color: white;
+          transition-property: color;
+          transition-duration: 300ms; }
+    #boardManager .boardcontainer .board .addBoard {
+      width: 100%;
+      height: 200px;
+      text-align: center;
+      font-size: 25px;
+      transition-property: background-color;
+      transition-duration: 300ms;
+      background-color: white; }
+      #boardManager .boardcontainer .board .addBoard span {
+        float: left;
+        width: 100%;
+        text-align: center;
+        height: 200px;
+        line-height: 200px;
+        font-size: 55px;
+        color: gray;
+        transition-property: color;
+        transition-duration: 300ms; }
+    #boardManager .boardcontainer .board .stats {
+      width: 158px;
+      float: left; }
+      #boardManager .boardcontainer .board .stats ul {
+        list-style-type: none;
+        width: 100%;
+        margin-left: 0;
+        height: 200px;
+        padding-left: 0px; }
+        #boardManager .boardcontainer .board .stats ul li {
+          width: 100%;
+          height: 50px; }
+          #boardManager .boardcontainer .board .stats ul li span {
+            font-size: 12px;
+            height: 50px;
+            float: left;
+            width: 40%;
+            padding-left: 5px;
+            line-height: 50px; }
+          #boardManager .boardcontainer .board .stats ul li .companyName {
+            width: 100%;
+            text-align: center;
+            font-weight: bold; }
+          #boardManager .boardcontainer .board .stats ul li span + span {
+            width: 5%; }
+          #boardManager .boardcontainer .board .stats ul li span + span + span {
+            width: 45%;
+            text-align: center; }
+    #boardManager .boardcontainer .board .controlls {
+      width: 40px;
+      float: right; }
+      #boardManager .boardcontainer .board .controlls ul {
+        list-style-type: none;
+        width: 100%;
+        margin-left: 0;
+        height: 200px;
+        padding-left: 0px;
+        background-color: #39aadf; }
+        #boardManager .boardcontainer .board .controlls ul li {
+          width: 100%;
+          padding-top: 10px;
+          height: 66px;
+          cursor: pointer; }
+          #boardManager .boardcontainer .board .controlls ul li:hover {
+            background-color: #e20613; }
+          #boardManager .boardcontainer .board .controlls ul li a {
+            font-size: 20px;
+            height: 66px;
+            width: 100%;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            color: white; }
+            #boardManager .boardcontainer .board .controlls ul li a:hover {
+              text-decoration: none; }
+            #boardManager .boardcontainer .board .controlls ul li a span {
+              margin-top: 15px;
+              margin-left: 25%;
+              width: 0; }
+
+/*# sourceMappingURL=boardmanager.css.map */

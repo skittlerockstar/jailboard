@@ -4,7 +4,6 @@
  * Defining the Package
  */
 var Module = require('meanio').Module;
-
 var Jailboard = new Module('jailboard');
 var RED = require('./node-red/red/red');
 var sass = require('node-sass');
@@ -44,6 +43,19 @@ Jailboard.register(function(app, auth, database, http) {
 //    roles: ['admin','developer'],
 //    menu: 'main',
 //  });
+
+  Jailboard.events.defaultData({
+    type: 'post',
+    subtype: 'article'
+  });
+
+    Jailboard.menus.add({
+        roles: ['admin'],
+        title: 'DATA',
+        link: 'data',
+        icon:  'signal',
+        menu: 'admin'
+    });
   Jailboard.menus.add({
     title: 'Jailboard',
     link: 'Jailboard',
@@ -56,9 +68,11 @@ Jailboard.register(function(app, auth, database, http) {
 //    roles: ['admin','authenticated'],
 //    menu: 'main'
 //  });
+Jailboard.aggregateAsset('css', 'boardcontrolls.css');
   Jailboard.aggregateAsset('css', 'jailboard.css');
   Jailboard.aggregateAsset('js','plotlyscript.js');
-
+    Jailboard.aggregateAsset('css', 'boardmanager.css');
+    
 var settings = {
     httpAdminRoot:"/api/jailboard/red",
     httpNodeRoot: "/api/jailboard/red",

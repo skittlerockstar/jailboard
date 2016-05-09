@@ -15,7 +15,7 @@ var gulp = require('gulp'),
     less: ['packages/**/*.less', '!packages/**/_*.less', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
     sass: ['packages/**/*.scss', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**', '!packages/**/assets/sass/motion-ui/**', '!packages/**/node-red/**'],
     coffee: ['packages/**/*.coffee', '!packages/**/node_modules/**', '!packages/**/assets/**/lib/**'],
-    postcss:['packages/custom/jailboard/public/assets/sass/jailboard.css']
+    postcss:['packages/custom/jailboard/public/assets/sass/*.css']
   };
 
 /*var defaultTasks = ['clean', 'jshint', 'less', 'csslint', 'devServe', 'watch'];*/

@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 5, 2016, 1:13:45 PM
+    Author     : max
+*/
+
+$themeColor:#39aadf;
+$themeColor2:#e20613;
+$darkColor:slategray;
+$darkColorText:#666;
+
+*{
+    transition-duration: 200ms;
+    transition-property: all;
+    cursor:default;
+    font-family: 'Ubuntu', sans-serif;
+}
+h1,h2,h3,h4,h5,h6{
+    color:$darkColorText;
+}
+.glyphicon{
+    cursor:pointer;
+    
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('meanio').loadConfigNew();
+var config = require('meanio').loadConfig();
 var jwt = require('jsonwebtoken'); //https://npmjs.org/package/node-jsonwebtoken
 
 module.exports = function(MeanUser, app, auth, database, passport) {

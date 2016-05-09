@@ -12,6 +12,7 @@ module.exports = function(System, app, auth, database) {
     .get(index.aggregatedList);
   
   app.get('/*',function(req,res,next){
+      console.log(mean.options.workerid);
         res.header('workerID' , JSON.stringify(mean.options.workerid) );
         next(); // http://expressjs.com/guide.html#passing-route control
   });

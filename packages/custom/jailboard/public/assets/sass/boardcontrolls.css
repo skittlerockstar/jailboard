@@ -1,0 +1,164 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 29, 2016, 9:19:28 AM
+    Author     : max
+*/
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 5, 2016, 1:13:45 PM
+    Author     : max
+*/
+* {
+  transition-duration: 200ms;
+  transition-property: all;
+  cursor: default;
+  font-family: 'Ubuntu', sans-serif; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #666; }
+
+.glyphicon {
+  cursor: pointer; }
+
+#boardFormInclude {
+  position: relative;
+  z-index: 10;
+  height: 0; }
+  #boardFormInclude.yes {
+    opacity: 1;
+    z-index: 999;
+    transition-property: opacity;
+    pointer-events: all; }
+  #boardFormInclude.no {
+    opacity: 0;
+    z-index: -1;
+    transition-property: opacity;
+    pointer-events: none; }
+  #boardFormInclude .panelBar {
+    height: 40px;
+    background-color: gray;
+    border-radius: 5px 5px 0 0; }
+    #boardFormInclude .panelBar .title {
+      font-size: 20px;
+      color: white;
+      line-height: 40px;
+      padding-left: 15px; }
+    #boardFormInclude .panelBar .right {
+      float: right;
+      height: 40px;
+      width: 40px;
+      font-size: 18px;
+      line-height: 40px;
+      color: white; }
+      #boardFormInclude .panelBar .right:hover {
+        color: red;
+        cursor: pointer; }
+
+#boardFormContainer {
+  width: 100%;
+  padding: 20px;
+  border-radius: 0px 0px 5px 5px;
+  box-shadow: 0px 0px 10px gray;
+  background-color: white; }
+
+#controllsContainer {
+  color: #999;
+  margin-top: 35px;
+  width: 100%; }
+  #controllsContainer #controlls {
+    margin: auto;
+    width: 80%;
+    padding: 50px;
+    padding-top: 30px;
+    margin-top: -35px; }
+    #controllsContainer #controlls #addDataSource {
+      padding: 0;
+      width: 100%; }
+    #controllsContainer #controlls .left, #controllsContainer #controlls .right {
+      float: left;
+      width: 50%;
+      padding: 0 20px; }
+      #controllsContainer #controlls .left:hover .title, #controllsContainer #controlls .right:hover .title {
+        box-shadow: 15px 16px 4px -15px #39aadf; }
+      #controllsContainer #controlls .left .title, #controllsContainer #controlls .right .title {
+        border-bottom: 2px solid gray;
+        padding-bottom: 10px;
+        font-size: 18px;
+        box-shadow: 15px 16px 4px -15px gray; }
+      #controllsContainer #controlls .left #save, #controllsContainer #controlls .left #load, #controllsContainer #controlls .left #add, #controllsContainer #controlls .right #save, #controllsContainer #controlls .right #load, #controllsContainer #controlls .right #add {
+        width: 33%;
+        font-size: 16px;
+        float: left; }
+        #controllsContainer #controlls .left #save .vertA, #controllsContainer #controlls .left #load .vertA, #controllsContainer #controlls .left #add .vertA, #controllsContainer #controlls .right #save .vertA, #controllsContainer #controlls .right #load .vertA, #controllsContainer #controlls .right #add .vertA {
+          width: 100%;
+          margin-left: 25%;
+          float: left; }
+        #controllsContainer #controlls .left #save .glyphicon, #controllsContainer #controlls .left #load .glyphicon, #controllsContainer #controlls .left #add .glyphicon, #controllsContainer #controlls .right #save .glyphicon, #controllsContainer #controlls .right #load .glyphicon, #controllsContainer #controlls .right #add .glyphicon {
+          margin-left: 25%;
+          font-size: 40px;
+          float: left;
+          padding: 20px;
+          border-radius: 50px;
+          background-color: slategray;
+          color: whitesmoke;
+          cursor: pointer;
+          border: solid 3px slategray; }
+          #controllsContainer #controlls .left #save .glyphicon:hover, #controllsContainer #controlls .left #load .glyphicon:hover, #controllsContainer #controlls .left #add .glyphicon:hover, #controllsContainer #controlls .right #save .glyphicon:hover, #controllsContainer #controlls .right #load .glyphicon:hover, #controllsContainer #controlls .right #add .glyphicon:hover {
+            background-color: whitesmoke;
+            border: solid 3px #39aadf;
+            box-sizing: border-box !important;
+            transform-origin: center;
+            color: slategray; }
+        #controllsContainer #controlls .left #save .addDataSourceBtn.glyphicon.glyphicon-plus:hover, #controllsContainer #controlls .left #load .addDataSourceBtn.glyphicon.glyphicon-plus:hover, #controllsContainer #controlls .left #add .addDataSourceBtn.glyphicon.glyphicon-plus:hover, #controllsContainer #controlls .right #save .addDataSourceBtn.glyphicon.glyphicon-plus:hover, #controllsContainer #controlls .right #load .addDataSourceBtn.glyphicon.glyphicon-plus:hover, #controllsContainer #controlls .right #add .addDataSourceBtn.glyphicon.glyphicon-plus:hover {
+          border-color: #e20613; }
+    #controllsContainer #controlls .right.important:hover .title {
+      box-shadow: -15px 16px 4px -15px #e20613; }
+    #controllsContainer #controlls .right.important .title {
+      box-shadow: -15px 16px 4px -15px gray; }
+    #controllsContainer #controlls .right.important #add {
+      float: none;
+      width: inherit; }
+      #controllsContainer #controlls .right.important #add .vertA {
+        margin-left: 15px;
+        float: none; }
+      #controllsContainer #controlls .right.important #add .glyphicon {
+        padding: 5px;
+        font-size: 14px !important; }
+    #controllsContainer #controlls .right.important fieldset {
+      float: left;
+      width: 50%;
+      padding-left: 20%; }
+    #controllsContainer #controlls .right.important form {
+      clear: left; }
+    #controllsContainer #controlls .right.important label {
+      cursor: pointer;
+      margin-left: -30px; }
+      #controllsContainer #controlls .right.important label:hover {
+        color: #666 !important; }
+        #controllsContainer #controlls .right.important label:hover .glyphicon {
+          background-color: whitesmoke;
+          padding: 7px;
+          border: solid 3px #e20613;
+          box-sizing: border-box !important;
+          transform-origin: center;
+          color: slategray; }
+      #controllsContainer #controlls .right.important label .glyphicon {
+        border: none;
+        font-size: 20px;
+        border: solid 3px slategray;
+        transform-origin: center;
+        background-color: slategray;
+        pointer-events: none;
+        color: whitesmoke;
+        padding: 7px;
+        border-radius: 40px; }
+        #controllsContainer #controlls .right.important label .glyphicon.glyphicon-tasks {
+          transform: rotate(-90deg); }

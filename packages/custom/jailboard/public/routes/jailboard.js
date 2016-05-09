@@ -25,6 +25,20 @@
           circles: ['admin']
         }
     });
+    $stateProvider.state('boards', {
+      url: '/boards',
+      templateUrl: './jailboard/views/boards.html',
+      requiredCircles: {
+          circles: ['admin']
+        }
+    });
+    $stateProvider.state('data', {
+      url: '/data',
+      templateUrl: './jailboard/views/data.html',
+      requiredCircles: {
+          circles: ['admin']
+        }
+    });
     $stateProvider.state('redirect', {
       url: '/rdr',
       templateUrl: './jailboard/views/rdr.html',

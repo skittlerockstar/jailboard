@@ -1,0 +1,34 @@
+<section id="boardManager" ng-controller="BoardManagerController" >
+        <div id="boardFormInclude" ng-class="{false:'no',true:'yes'}[popup]" data-ng-include="'/jailboard/views/includes/boardFormContainer.html'"></div>
+       <div class="boardcontainer" ng-click="popup = !popup">
+        <div class="name"><h3 class="text-center">Add a board</h3></div>
+        <div class="board add">
+            <div class="addBoard"><span class="glyphicon glyphicon-plus"></span></div>
+        </div>
+        <div id="boardForm" ng-hide="true">
+            
+        </div>
+    </div>
+    
+       <div class="boardcontainer">
+           <div class="name"><h3 class="text-center">CaseName </h3></div>
+        <div class="board">
+            <div class="stats">
+                <ul>
+                    <li><span class="companyName">Tweetonig</span></li>
+                    <li><span >Devices</span><span>:</span><span>100</span></li>
+                    <li><span >Users</span><span>:</span><span>100</span></li>
+                    <li><span >DataUsage</span><span>:</span><span>100</span></li>
+                </ul>
+            </div>
+            <div class="controlls">
+                <ul>
+                    <li ng-route="'/jailboard'"><a href="/Jailboard" class="ng-binding" mean-token="item.link" ui-sref="Jailboard">
+                            <span class="glyphicon glyphicon-pencil text-center"></span></a></li>
+                    <li><a><span class="glyphicon glyphicon-remove text-center"></span></a></li>
+                    <li><a><span class="glyphicon glyphicon-ban-circle text-center"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

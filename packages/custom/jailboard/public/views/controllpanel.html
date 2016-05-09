@@ -8,6 +8,7 @@
     //IN Customize Toolbar Pos
     //IN Customize ColorScheme-->
     <div id="JailboardBar" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]">
+        <div id='controllsContainer' ng-include="'jailboard/views/includes/controllpanelControlls.html'"></div>
         <div id="barController" class="scale-out-down fast" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]" ng-click="collapsed =!collapsed;" >
                 <span class="glyphicon glyphicon-wrench"></span> 
         </div>

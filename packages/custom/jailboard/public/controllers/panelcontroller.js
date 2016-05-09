@@ -16,7 +16,14 @@
         $scope.authorized = false;
     checkUserStatus($http,Jailboard,$scope);
     $scope.rotate = false;
-    $scope.collapsed = true;
+    $scope.collapsed = false;
+    $scope.addDataSource = false;
+    $scope.getter = function(prop){
+        return $scope[prop];
+    };
+    $scope.setter = function(prop,val){
+        $scope[prop] = val;
+    };
     $scope.animDelay = function(){
         if(this.collapsed != this.rotate){
             if(this.rotate == null){
