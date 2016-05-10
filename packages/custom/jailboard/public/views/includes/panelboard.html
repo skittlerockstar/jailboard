@@ -1,12 +1,18 @@
-<div class="innerContainer">
+<div class="innerContainer" ng-controller="LayoutController">
     <div class="row">
         <div class="col-xs-12">
-            <h1 class="title">Jailboard</h1>
+            <h1 class="title">{{board.name}}</h1>
         </div>
     </div>
-    <div class="row" id="panels">
-        <div class="col-xs-12">
-            
+    <div class="row" id="panel">
+        <div class="col-xs-10 col-xs-offset-1">
+             <div class="row" id="panels">
+                <div class="col-xs-12 panel">
+                    <div class="panelInner">
+                        <h2>test</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

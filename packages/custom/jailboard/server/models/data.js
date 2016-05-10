@@ -11,9 +11,9 @@ var mongoose = require('mongoose'),
  * Board Schema
  */
 var DataSchema = new Schema({
-  sensorID:{
+  nodeID:{
     type: Schema.ObjectId,
-    ref: 'Sensors',
+    ref: 'Nodes',
     required: true
   },
   data:{

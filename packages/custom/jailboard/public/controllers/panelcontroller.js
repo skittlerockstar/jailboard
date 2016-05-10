@@ -4,20 +4,20 @@
   /* jshint -W098 */
   angular
     .module('mean.jailboard')
-    .controller('CtrlPanelController', CtrlPanelController);
+    .controller('CtrlPanelController', CtrlPanelController)
+    .controller('LayoutController', LayoutController)
+    ;
 
-  CtrlPanelController.$inject = ['$scope','$timeout', 'Global', 'Jailboard', '$http'];
+  CtrlPanelController.$inject = ['Boards','$stateParams','$scope','$timeout', 'Global', 'Jailboard', '$http'];
 
-  function CtrlPanelController($scope, $timeout, Global, Jailboard, $http) {
+  function CtrlPanelController(Boards,$stateParams,$scope, $timeout, Global, Jailboard, $http) {
       $scope.global = Global;
-    $scope.p = {
-      name: 'ctrlpanel'
-    };
-        $scope.authorized = false;
+    $scope.authorized = false;
     checkUserStatus($http,Jailboard,$scope);
     $scope.rotate = false;
     $scope.collapsed = false;
     $scope.addDataSource = false;
+    $scope.board = '';
     $scope.getter = function(prop){
         return $scope[prop];
     };
@@ -34,6 +34,19 @@
             }
         }
     };
+    
+    $scope.getBoard = function(){
+      Boards.get({
+        boardID: $stateParams.boardID
+      }, function(b) {
+        $scope.board = b.board;
+      });
+    }
+    
+  }
+  
+  function LayoutController($scope){
+      
   }
   
     function checkUserStatus(http,j,s){
@@ -41,6 +54,7 @@
         if(d == ""){j.reLogin();}
         else{
             s.authorized = true;
+            s.getBoard();
         }
       });
   }

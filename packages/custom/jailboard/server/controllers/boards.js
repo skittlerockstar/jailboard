@@ -5,6 +5,8 @@
  */
 var mongoose = require('mongoose'),
     Board = mongoose.model('Boards'),
+    Users = mongoose.model('User'),
+    Layouts = mongoose.model('Layouts'),
     config = require('meanio').loadConfig(),
     _ = require('lodash');
 
@@ -26,80 +28,73 @@ module.exports = function(Boards) {
          * Create an board
          */
         create: function(req, res) {
-            console.log('board = ');
-            console.log(Board);
+            Users.findOne({'name':req.body.ownerID},'_id',function(err, _id){
+                req.body.ownerID = _id;
             var board = new Board(req.body);
             board.user = req.user;
-            
             board.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: err
+                    if (err) {
+                        console.log(err);
+                        return res.status(500).json({
+                            error: err
+                        });
+                    }
+
+                    Boards.events.publish({
+                        action: 'created',
+                        user: {
+                            name: 'derp'
+                        },
+                        url: config.hostname + '/boards/' + board._id,
+                        name: board.title
                     });
-                }
-
-                Boards.events.publish({
-                    action: 'created',
-                    user: {
-                        name: 'derp'
-                    },
-                    url: config.hostname + '/boards/' + board._id,
-                    name: board.title
+                    board.nodeCount = 0;    
+                    board.users = 1;    
+                    res.json(board);
                 });
-
-                res.json(board);
-            });
+             });
         },
         /**
          * Update an board
          */
         update: function(req, res) {
-            var board = req.board;
-
+            var board = req.body;
+           Board.findByIdAndUpdate(board._id,board,function(err,r){
+              console.log(r); 
+           });
             board = _.extend(board, req.body);
+            
 
-
-            board.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot update the board'
-                    });
-                }
-
-                Boards.events.publish({
-                    action: 'updated',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: board.title,
-                    url: config.hostname + '/boards/' + board._id
-                });
+//            board.save(function(err) {
+//                if (err) {
+//                    return res.status(500).json({
+//                        error: 'Cannot update the board'
+//                    });
+//                }
+//
+//                Boards.events.publish({
+//                    action: 'updated',
+//                    user: {
+//                        name: req.user.name
+//                    },
+//                    name: board.title,
+//                    url: config.hostname + '/boards/' + board._id
+//                });
 
                 res.json(board);
-            });
+//            });
         },
         /**
          * Delete an board
          */
         destroy: function(req, res) {
-            var board = req.board;
-
-
-            board.remove(function(err) {
+            var board = req.params.boardID;
+            Board.find({ '_id':board }).remove(function(err,respons) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot delete the board'
                     });
                 }
-
-                Boards.events.publish({
-                    action: 'deleted',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: board.title
-                });
-
                 res.json(board);
             });
         },
@@ -107,25 +102,22 @@ module.exports = function(Boards) {
          * Show an board
          */
         show: function(req, res) {
-
-            Boards.events.publish({
-                action: 'viewed',
-                user: {
-                    name: req.user.name
-                },
-                name: req.board.title,
-                url: config.hostname + '/boards/' + req.board._id
+           var board = req.params.boardID;
+            Board.findOne({ '_id':board }).exec(function(err,respons) {
+                if (err) {
+                    return res.status(500).json({
+                        error: 'Cant Find board'
+                    });
+                }
+                res.json({'board':respons});
             });
-
-            res.json(req.board);
         },
         /**
          * List of Boards
          */
         all: function(req, res) {
-            var query = req.acl.query('Board');
 
-            query.find({}).sort('-created').populate('user', 'name username').exec(function(err, boards) {
+            Board.find({}).sort('-created').populate('user', 'name username').exec(function(err, boards) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the boards'

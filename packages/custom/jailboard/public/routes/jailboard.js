@@ -11,11 +11,11 @@
   jailboard.$inject = ['$stateProvider'];
 
   function jailboard($stateProvider) {
-    $stateProvider.state('Jailboard', {
-      url: '/Jailboard',
+    $stateProvider.state('board by id', {
+      url: '/boards/:boardID',
       templateUrl: './jailboard/views/index.html',
       requiredCircles: {
-          circles: ['topkek']
+          circles: ['admin']
         }
     });
     $stateProvider.state('index', {

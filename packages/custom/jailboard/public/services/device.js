@@ -10,12 +10,17 @@
 
   function Devices($resource) {
     return $resource('api/devices/:deviceID', {
-      deviceId: '@deviceID'
+      deviceId: '@deviceID',
     }, {
       update: {
         method: 'PUT'
+      },
+      count: {
+          url:'api/devices/count',
+          method:'GET'
       }
     });
   }
+ 
 })();
 

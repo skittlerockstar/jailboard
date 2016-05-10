@@ -857,4 +857,7 @@ body {
   #overlay.mui-leave-active {
     height: 0; }
 
+#panelContainer .innerContainer {
+  padding: 0px 70px; }
+
 /*# sourceMappingURL=jailboard.css.map */

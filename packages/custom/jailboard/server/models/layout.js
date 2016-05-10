@@ -15,9 +15,9 @@ var LayoutSchema = new Schema({
     type: Schema.ObjectId,
     required: true
   },
-  sensorID:{
+  nodeID:{
     type: Schema.ObjectId,
-    ref: 'Sensors',
+    ref: 'Nodes',
     required: true
   },
   graphType:{

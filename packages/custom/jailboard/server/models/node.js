@@ -10,8 +10,8 @@ var mongoose = require('mongoose'),
 /**
  * Board Schema
  */
-var SensorSchema = new Schema({
-  sensorID:{
+var NodeSchema = new Schema({
+  nodeID:{
     type: Schema.ObjectId,
     required: true
   },
@@ -20,9 +20,14 @@ var SensorSchema = new Schema({
     ref: 'Types',
     required: true
   },
-  DeviceID:{
+  deviceID:{
     type: Schema.ObjectId,
     ref: 'Devices',
+    required: true
+  },
+  boardID:{
+    type: Schema.ObjectId,
+    ref: 'Boards',
     required: true
   }
 });
@@ -34,10 +39,10 @@ var SensorSchema = new Schema({
 /**
  * Statics
  */
-SensorSchema.statics.load = function(id, cb) {
+NodeSchema.statics.load = function(id, cb) {
   this.findOne({
     _id: id
   }).populate('user', 'name username').exec(cb);
 };
 
-mongoose.model('Sensors', SensorSchema);
+mongoose.model('Nodes', NodeSchema);

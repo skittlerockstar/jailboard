@@ -1,19 +1,19 @@
 <div id="controlls">
     <div class="left">
-        <h1 class='title'>Jailboard Controlls</h1>
+        <h1 class='title'>{{board.name}} Controlls</h1>
         <div id="save"><span class='vertA' > Save Board</span><span class="glyphicon glyphicon-open-file"></span></div>
         <div id="load"><span class='vertA'> Load Board</span><span class="glyphicon glyphicon-save-file"></span></div>
         <div id="add"><span class='vertA'> Add Panel</span><span class="glyphicon glyphicon-plus"></span></div>
     </div>
     <div class="right important">
-        <h1 class='title'>Datasources</h1>
+        <h1 class='title'>Nodes</h1>
         <div id="add" ng-click="setter('addDataSource',!getter('addDataSource'))">
-            <span class='vertA'> Add Datasource</span>
+            <span class='vertA'> Add Node</span>
             <span class="glyphicon addDataSourceBtn" ng-class="{false:'glyphicon-plus',true:'glyphicon-minus'}[addDataSource]"></span>
         </div>
         <div id='addDataSource' ng-class='{false:"hide",true:"show"}[addDataSource]'>
             <form class=''>
-                <fieldset class="form-group">
+                <fieldset ng-click="addDataSource()" class="form-group">
                     <input type="radio" name="optionsRadios" id="motion" value="option1" >
                     <label for='motion'><span class='glyphicon glyphicon-transfer'></span>
                         Motion
@@ -32,8 +32,8 @@
                     </label>
                     
                 </fieldset>
-                     </fieldset>
-                     <fieldset class="form-group">
+                     </fieldset >
+                     <fieldset ng-click="addDataSource('switch')" class="form-group">
                     <input type="radio" name="optionsRadios" id="switch" value="option1" >
                     <label for='switch'><span class='glyphicon glyphicon-off'></span>
                         On / Off

@@ -1,4 +1,4 @@
-<section id="boardManager" ng-controller="BoardManagerController" >
+<section id="boardManager" ng-controller="BoardManagerController" ng-init="init()" >
         <div id="boardFormInclude" ng-class="{false:'no',true:'yes'}[popup]" data-ng-include="'/jailboard/views/includes/boardFormContainer.html'"></div>
        <div class="boardcontainer" ng-click="popup = !popup">
         <div class="name"><h3 class="text-center">Add a board</h3></div>
@@ -10,23 +10,25 @@
         </div>
     </div>
     
-       <div class="boardcontainer">
-           <div class="name"><h3 class="text-center">CaseName </h3></div>
+       <div class="boardcontainer" ng-repeat="board in boards">
+           <div class="name"><h3 class="text-center">{{board.name}} </h3></div>
         <div class="board">
             <div class="stats">
                 <ul>
-                    <li><span class="companyName">Tweetonig</span></li>
-                    <li><span >Devices</span><span>:</span><span>100</span></li>
-                    <li><span >Users</span><span>:</span><span>100</span></li>
-                    <li><span >DataUsage</span><span>:</span><span>100</span></li>
+                    <li><span class="companyName">{{board.companyName}}</span></li>
+                    <li><span >Suspended</span><span>:</span><span>{{{false:'No',true:'yes'}[board.suspended]}}</span></li>
+                    <li><span >Users</span><span>:</span><span>{{board.users}}</span></li>
+                    <li><span >Nodes</span><span>:</span><span>{{board.nodes}}</span></li>
                 </ul>
             </div>
-            <div class="controlls">
+            <div class="controlls"  >
                 <ul>
-                    <li ng-route="'/jailboard'"><a href="/Jailboard" class="ng-binding" mean-token="item.link" ui-sref="Jailboard">
-                            <span class="glyphicon glyphicon-pencil text-center"></span></a></li>
-                    <li><a><span class="glyphicon glyphicon-remove text-center"></span></a></li>
-                    <li><a><span class="glyphicon glyphicon-ban-circle text-center"></span></a></li>
+                    <li  ><a ng-href="boards/{{board._id}}" uib-tooltip="View and edit board" >
+                    <span class="glyphicon glyphicon-search text-center"></span></a></li>
+                    <li  ng-click="editBoard(board)"><a href="/Jailboard" class="ng-binding" mean-token="item.link" ui-sref="Jailboard" uib-tooltip="Edit board's info">
+                    <span class="glyphicon glyphicon-pencil text-center"></span></a></li>
+                    <li ng-click="deleteBoard(board)"uib-tooltip="Delete board" ><a><span class="glyphicon glyphicon-remove text-center"></span></a></li>
+                    <li ng-click="suspendBoard(board)" uib-tooltip="Suspend board"  ><a><span class="glyphicon glyphicon-ban-circle text-center"></span></a></li>
                 </ul>
             </div>
         </div>

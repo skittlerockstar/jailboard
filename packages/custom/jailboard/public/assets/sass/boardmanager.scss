@@ -102,13 +102,15 @@ and open the template in the editor.
                 } 
             }
             .controlls{
+                $panelHeight:200;
+                $panels:4;
                 width: 40px;
                 float:right; 
                 ul{
                     list-style-type:none;
                     width:100%;
                     margin-left:0;
-                    height:200px;
+                    height:$panelHeight+px;
                     padding-left:0px;
                     background-color:$themeColor;
                     li{
@@ -116,12 +118,13 @@ and open the template in the editor.
                             background-color:$themeColor2;
                         }
                         width:100%;
-                        padding-top:10px;
-                        height: 66px;
-                        cursor:pointer;
+                       
+                        height: $panelHeight/$panels+px;
+                       
                         a{
+                             cursor:pointer;
                             font-size: 20px;
-                            height:66px;
+                            height:$panelHeight/$panels+px;
                             width:100%;
                             display:flex;
                             color:white;
@@ -129,7 +132,8 @@ and open the template in the editor.
                                 text-decoration: none;
                             }
                             span{
-                                margin-top:15px;
+                                 padding-top:10px;
+                                margin-top:5px;
                                 margin-left:25%;
                                 width:0;
                             }

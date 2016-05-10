@@ -13,12 +13,23 @@ var mongoose = require('mongoose'),
 var BoardSchema = new Schema({
   boardID:{
     type: Schema.ObjectId,
-    required: true
   },
   ownerID:{
     type: Schema.ObjectId,
     ref: 'User',
     required: true
+  },  
+  name:{
+    type: String,
+    required: true
+  },  
+  companyName:{
+    type: String,
+    required: true
+  },
+  suspended:{
+    type: Boolean,
+    default:false
   }
 });
 
@@ -32,7 +43,7 @@ var BoardSchema = new Schema({
 BoardSchema.statics.load = function(id, cb) {
   this.findOne({
     _id: id
-  }).populate('user', 'name username').exec(cb);
+  }).populate('user', '_id').exec(cb);
 };
 
 mongoose.model('Boards', BoardSchema);

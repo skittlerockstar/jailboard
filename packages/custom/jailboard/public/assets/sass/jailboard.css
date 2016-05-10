@@ -630,3 +630,6 @@ body {
       opacity: 0; }
   #overlay.mui-leave-active {
     height: 0; }
+
+#panelContainer .innerContainer {
+  padding: 0px 70px; }

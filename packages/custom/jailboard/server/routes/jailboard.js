@@ -29,15 +29,18 @@ var hasPermissions = function(req, res, next) {
       res.send(req.body);
     });
     app.get('/api/jailboard', function (req, res, next) {
-     res.redirect('jailboard/red');
+        res.redirect('jailboard/red');
     });
-    app.get('/jailboard', function (req, res, next) {
-      Jailboard.render('index', {
-        package: 'jailboard'
-      }, function (err, html) {
-        //Rendering a view from the Package server/views
-        res.send(html);
-      });
+    app.get('/api/jailboard', function (req, res, next) {
+        res.redirect('jailboard/red');
     });
+//    app.get('/jailboard', function (req, res, next) {
+//      Jailboard.render('index', {
+//        package: 'jailboard'
+//      }, function (err, html) {
+//        //Rendering a view from the Package server/views
+//        res.send(html);
+//      });
+//    });
   };
 })();

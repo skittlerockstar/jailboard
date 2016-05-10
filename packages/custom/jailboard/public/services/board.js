@@ -9,8 +9,8 @@
   Boards.$inject = ['$resource'];
 
   function Boards($resource) {
-    return $resource('api/board/:boardID', {
-      boardID: '@boardID'
+    return $resource('api/boards/:boardID', {
+      boardID: '@_id'
     }, {
       update: {
         method: 'PUT'
