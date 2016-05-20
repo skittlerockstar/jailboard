@@ -128,16 +128,18 @@ module.exports = function(Nodes) {
          * List of Nodes
          */
         all: function(req, res) {
-            var query = req.acl.query('Node');
-
-            query.find({}).sort('-created').populate('user', 'name username').exec(function(err, nodes) {
+          var query = req.query.query || {};
+            if(typeof query === 'string'){
+                query = JSON.parse(query);
+            }
+              Node.find(query).exec(function(err, nodes) {
                 if (err) {
                     return res.status(500).json({
-                        error: 'Cannot list the nodes'
+                        error: 'Cannot list the boards'
                     });
                 }
-
-                res.json(nodes)
+                console.log(nodes);
+                res.json({"nodes":nodes});
             });
 
         }

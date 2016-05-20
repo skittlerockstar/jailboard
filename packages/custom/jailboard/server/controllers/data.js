@@ -4,18 +4,21 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Data = mongoose.model('Data'),
+    Datas = mongoose.model('Data'),
+    Devices = mongoose.model('Devices'),
+    Nodes = mongoose.model('Nodes'),
+    Types = mongoose.model('Types'),
     config = require('meanio').loadConfig(),
     _ = require('lodash');
 
-module.exports = function(Data) {
+module.exports = function(DataSources) {
 
     return {
         /**
          * Find data by id
          */
         data: function(req, res, next, id) {
-            Data.load(id, function(err, data) {
+            Datas.load(id, function(err, data) {
                 if (err) return next(err);
                 if (!data) return next(new Error('Failed to load data ' + id));
                 req.data = data;
@@ -26,29 +29,48 @@ module.exports = function(Data) {
          * Create an data
          */
         create: function(req, res) {
-            console.log("Data =");
-            console.log(Data);
-            var data = new Data(req.body);
-            data.user = req.user;
-            
-            data.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: err
-                    });
-                }
+            var incoming = req.body;
+            var rand = Math.round(Math.random()*50)+1;
+            var date = new Date();
+            incoming.data = [rand];
+           //check if device exists
+           Devices.findOne({"deviceID":incoming.deviceID},"_id",function(err,result){
+             // if result check if sensor exists / else create new device and sensor.
+              Types.findOne({"nodeID":incoming.nodeID},function(r,type){
+                  incoming.typeID = type._id;
+                    if(result === null){
+                        createDevice(incoming);
+                    }else{
+                        Nodes.findOne({"deviceID":result._id,},function(r,noderes){
+                            if(noderes === null){
+                                 createNode(incoming,result);
+                            }else{
+                                createData(incoming,result,noderes);
+                            }
+                        });
+                    }
+             });
+           });
+           
+           function createDevice(incoming){
+               var device = new Devices({"deviceID":incoming.deviceID,"accessToken":"randomshit"});
+                 device.save(function(err,devres){
+                          createNode(incoming,devres);
+                 });
+           }
+           function createNode(incoming,devres){
+                var node = new Nodes({"typeID":incoming.typeID,"nodeID":incoming.nodeID,"deviceID":devres._id,"boardID":"5731b663c11caa9818fed312"});
+                 node.save(function(err,noderes){
+                     createData(incoming,devres,noderes);
+                  });
+           }
+           function createData(incoming,devres,noderes){
+               var data = new Datas({"data":incoming.data,"nodeID":noderes._id,"created":date});
+               data.save(function(err,c){
+               });
+           }
+           res.json('BINGO');
 
-                Data.events.publish({
-                    action: 'created',
-                    user: {
-                        name: 'derp'
-                    },
-                    url: config.hostname + '/data/' + data._id,
-                    name: data.title
-                });
-
-                res.json(data);
-            });
         },
         /**
          * Update an data
@@ -66,7 +88,7 @@ module.exports = function(Data) {
                     });
                 }
 
-                Data.events.publish({
+                Datas.events.publish({
                     action: 'updated',
                     user: {
                         name: req.user.name
@@ -92,7 +114,7 @@ module.exports = function(Data) {
                     });
                 }
 
-                Data.events.publish({
+                Datas.events.publish({
                     action: 'deleted',
                     user: {
                         name: req.user.name
@@ -108,31 +130,33 @@ module.exports = function(Data) {
          */
         show: function(req, res) {
 
-            Data.events.publish({
-                action: 'viewed',
-                user: {
-                    name: req.user.name
-                },
-                name: req.data.title,
-                url: config.hostname + '/data/' + req.data._id
+             var data = req.params.dataID;
+            Datas.findOne({ '_id':data }).exec(function(err,respons) {
+                if (err) {
+                    return res.status(500).json({
+                        error: 'Cant Find board'
+                    });
+                }
+                res.json({'data':respons});
             });
-
-            res.json(req.data);
         },
         /**
-         * List of Data
+         * List of Datas
          */
         all: function(req, res) {
-            var query = req.acl.query('Data');
-
-            query.find({}).sort('-created').populate('user', 'name username').exec(function(err, data) {
+            var limit = req.query.limit || null;
+            var sort = req.query.sort || -1;
+            var nodeID = req.query.nodeID || null;
+            console.log(req.query);
+            limit = parseInt(limit);
+            Datas.find({"nodeID":nodeID},{},{ "sort": { 'created' : sort },"limit":limit }).exec(function(err, data) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the data'
                     });
                 }
-
-                res.json(data)
+                console.log(data);
+                res.json({'datas':data});
             });
 
         }

@@ -15,11 +15,6 @@ var DeviceSchema = new Schema({
     type: String,
     required: false
   },
-  ownerID:{
-    type: Schema.ObjectId,
-    ref: 'User',
-    required: false
-  },
   accessToken:{
       type:String,
   default:'null'

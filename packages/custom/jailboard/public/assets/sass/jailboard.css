@@ -463,7 +463,7 @@ body {
   background-color: whitesmoke; }
 
 #jailboardControllPanel {
-  position: fixed;
+  position: absolute;
   z-index: 90;
   width: 100%;
   top: 25px;
@@ -565,14 +565,16 @@ body {
       left: -5px;
       cursor: pointer;
       color: white; }
-  .dropControllerContainer.up.mui-enter {
-    transition-duration: 500ms;
-    transition-timing-function: linear;
-    transform: translateY(150%);
-    transition-property: transform, opacity;
-    backface-visibility: hidden; }
-  .dropControllerContainer.up.mui-enter.mui-enter-active {
-    transform: translateY(0); }
+  .dropControllerContainer.up {
+    width: 50%; }
+    .dropControllerContainer.up.mui-enter {
+      transition-duration: 500ms;
+      transition-timing-function: linear;
+      transform: translateY(150%);
+      transition-property: transform, opacity;
+      backface-visibility: hidden; }
+    .dropControllerContainer.up.mui-enter.mui-enter-active {
+      transform: translateY(0); }
   .dropControllerContainer.down.mui-enter {
     transition-duration: 500ms;
     transition-timing-function: linear;
@@ -633,3 +635,8 @@ body {
 
 #panelContainer .innerContainer {
   padding: 0px 70px; }
+  #panelContainer .innerContainer #panels .panelcontainer {
+    min-height: 250px; }
+    #panelContainer .innerContainer #panels .panelcontainer .panel {
+      min-height: 250px;
+      padding: 20px; }

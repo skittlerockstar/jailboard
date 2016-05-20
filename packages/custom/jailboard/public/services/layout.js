@@ -14,6 +14,13 @@
     }, {
       update: {
         method: 'PUT'
+      },
+      board:{
+          method:"GET",
+          url:"api/layouts/:boardID/:nodeID/:deviceID",
+          boardID:"@boardID",
+          deviceID:"@deviceID",
+          nodeID:"@nodeID"
       }
     });
   }

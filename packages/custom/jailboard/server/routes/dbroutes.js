@@ -44,10 +44,17 @@ var hasPermissions = function(req, res, next) {
           .put(boards.update);
   
 //data routes
-  app.route('/api/datas')
-    .get(datas.create)
+app.route('/api/data/create')
+        .post(datas.create);
+
+  app.route('/api/data')
+    .get(datas.all)
     .post(auth.requiresLogin, datas.create);
- 
+     
+  app.route('/api/data/:dataID')
+          .get(datas.show)
+          .delete(datas.destroy)
+          .put(datas.update);
 //devices routes
   app.route('/api/devices')
     .get(devices.all)
@@ -55,9 +62,9 @@ var hasPermissions = function(req, res, next) {
  
 //layouts routes
   app.route('/api/layouts')
-    .get(layouts.create)
-    .post(auth.requiresLogin, layouts.create);
-    
+    .get(layouts.all);
+    app.route('/api/layouts/:boardID/:nodeID/:deviceID')
+            .post(layouts.create);
 //permissions routes
   app.route('/api/permissions')
     .get(permissions.create)
@@ -65,8 +72,9 @@ var hasPermissions = function(req, res, next) {
     
 //nodes routes
   app.route('/api/nodes')
-    .get(nodes.create)
+    .get(nodes.all)
     .post(auth.requiresLogin, nodes.create);
+    
   app.route('/api/nodes/count')
      .get(nodes.count);
 //types routes

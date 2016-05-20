@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
  */
 var NodeSchema = new Schema({
   nodeID:{
-    type: Schema.ObjectId,
+    type: String,
     required: true
   },
   typeID:{

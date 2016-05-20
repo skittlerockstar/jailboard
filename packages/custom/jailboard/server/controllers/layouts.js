@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Layout = mongoose.model('Layouts'),
+    Node = mongoose.model('Nodes'),
     config = require('meanio').loadConfig(),
     _ = require('lodash');
 
@@ -22,30 +23,32 @@ module.exports = function(Layouts) {
                 next();
             });
         },
+         getBoardLayouts: function(req, res) {
+            var boardID = req.params.boardID;
+            Layouts.find({"boardID":boardID},{}).exec(function(err, data) {
+                if (err) {
+                    return res.status(500).json({
+                        error: 'Cannot list the data'
+                    });
+                }
+                console.log(data);
+                res.json({'datas':data});
+            });
+
+        },
         /**
          * Create an layout
          */
         create: function(req, res) {
-            
-            var layout = new Layout(req.body);
-            layout.user = req.user;
-            
+            console.log(req.params);
+            console.log(req.body);
+            var layout = new Layout(req.params);
             layout.save(function(err) {
                 if (err) {
                     return res.status(500).json({
                         error: err
                     });
                 }
-
-                Layouts.events.publish({
-                    action: 'created',
-                    user: {
-                        name: 'derp'
-                    },
-                    url: config.hostname + '/layouts/' + layout._id,
-                    name: layout.title
-                });
-
                 res.json(layout);
             });
         },
@@ -122,18 +125,16 @@ module.exports = function(Layouts) {
          * List of Layouts
          */
         all: function(req, res) {
-            var query = req.acl.query('Layout');
-
-            query.find({}).sort('-created').populate('user', 'name username').exec(function(err, layouts) {
+              var query = req.query;
+              Layout.find({"boardID":query.boardID}).exec(function(err, layouts) {
                 if (err) {
                     return res.status(500).json({
-                        error: 'Cannot list the layouts'
+                        error: 'Cannot list the boards'
                     });
                 }
-
-                res.json(layouts)
+                console.log(layouts);
+                res.json({"layouts":layouts})
             });
-
         }
     };
 }

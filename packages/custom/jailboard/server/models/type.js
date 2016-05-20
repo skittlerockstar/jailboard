@@ -12,12 +12,16 @@ var mongoose = require('mongoose'),
  */
 var TypeSchema = new Schema({
   nodeID:{
-    type: Schema.ObjectId,
+    type: String,
     ref: 'Nodes',
     required: true
   },
   type:{
-      type:String,
+  type:String,
+  default:'null'
+  },
+  glyph:{
+  type:String,
   default:'null'
   }
 });

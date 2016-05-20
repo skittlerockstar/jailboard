@@ -72,6 +72,8 @@ and open the template in the editor.
             }
         }
         .right.important{
+            overflow-y: scroll;
+            height: 310px;
             &:hover{
                 .title{
                     box-shadow: -15px 16px 4px -15px $themeColor2;
@@ -103,9 +105,13 @@ and open the template in the editor.
                 clear:left;
             }
             label{  
+                &.disabled{
+                        cursor:not-allowed;
+                        opacity:.5;
+                    }
                 cursor:pointer;
                 margin-left:-30px;
-                &:hover{
+                &:not(.disabled):hover{
                     .glyphicon{
                         background-color:whitesmoke;
                         padding: 7px;
@@ -117,6 +123,7 @@ and open the template in the editor.
                     color:$darkColorText !important;
                 }
                 .glyphicon{
+                    
                     border:none;
                     font-size: 20px;
                     border:solid 3px $darkColor;

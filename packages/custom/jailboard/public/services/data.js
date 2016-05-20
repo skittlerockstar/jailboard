@@ -4,7 +4,7 @@
 
   angular
     .module('mean.jailboard')
-    .factory('Data', Data);
+    .factory('Datas', Data);
 
   Data.$inject = ['$resource'];
 

@@ -14,22 +14,28 @@ var DataSchema = new Schema({
   nodeID:{
     type: Schema.ObjectId,
     ref: 'Nodes',
-    required: true
+    required: false
   },
   data:{
       type:Array,
-  default:'null'
+  default:[random()]
   },
   created:{
       type:Date,
-  required: true
+     required: true,
+ default:date()
   }
 });
 
 /**
  * Validations
  */
-
+function date(){
+      return new Date();
+}
+function random(){
+return Math.floor((Math.random() * 50) + 1); 
+}
 /**
  * Statics
  */

@@ -18,6 +18,8 @@
         "bower_components/angular-jwt/dist/angular-jwt.min.js",
         "bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
         "bower_components/angular-ui-select/dist/select.min.js",
+        "bower_components/jquery-ui/jquery-ui.min.js",
+        "bower_components/angular-dragdrop/src/angular-dragdrop.min.js",
         "bower_components/web-bootstrap/index.js"
       ]
     }

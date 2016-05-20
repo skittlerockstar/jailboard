@@ -13,33 +13,11 @@
         </div>
         <div id='addDataSource' ng-class='{false:"hide",true:"show"}[addDataSource]'>
             <form class=''>
-                <fieldset ng-click="addDataSource()" class="form-group">
-                    <input type="radio" name="optionsRadios" id="motion" value="option1" >
-                    <label for='motion'><span class='glyphicon glyphicon-transfer'></span>
-                        Motion
+                <fieldset ng-repeat="node in types" ng-click="addNode(node)" ng-attr-uib-tooltip="{{node.available === true ? null : 'no '+node.nodeType+' detected '}}"  class="form-group">
+                    <label ng-class="{false:'disabled',true:''}[node.available]" for='motion'><span class='glyphicon glyphicon-{{node.glyph}}'></span>
+                        {{node.nodeType}}
                     </label>
                      </fieldset>
-                 <fieldset class="form-group">
-                    <input type="radio" name="optionsRadios" id="power" value="option1" >
-                    <label for='power'><span class='glyphicon glyphicon-flash'></span>
-                        Power
-                    </label>
-                     </fieldset>
-                     <fieldset class="form-group">
-                    <input type="radio" name="optionsRadios" id="temperature" value="option1" >
-                    <label for='temperature'><span class='glyphicon glyphicon-tasks'></span>
-                        Temperature
-                    </label>
-                    
-                </fieldset>
-                     </fieldset >
-                     <fieldset ng-click="addDataSource('switch')" class="form-group">
-                    <input type="radio" name="optionsRadios" id="switch" value="option1" >
-                    <label for='switch'><span class='glyphicon glyphicon-off'></span>
-                        On / Off
-                    </label>
-                    
-                </fieldset>
 
                 <!--  <fieldset class="form-group">
                     <label for="exampleInputPassword1">Password</label>

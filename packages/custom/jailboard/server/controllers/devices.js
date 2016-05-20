@@ -122,16 +122,16 @@ module.exports = function(Devices) {
          * List of Devices
          */
         all: function(req, res) {
-            var query = req.acl.query('Device');
-
-            query.find({}).sort('-created').populate('user', 'name username').exec(function(err, devices) {
+              var q = req.query.query || '{}';
+               q = JSON.parse(q);
+            Device.find(q).exec(function(err, devices) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the devices'
                     });
                 }
 
-                res.json(devices)
+                res.json({'devices':devices});
             });
 
         }

@@ -10,8 +10,10 @@
     "bootstrap": "latest",
     "angular-bootstrap": "latest",
     "angular-ui-router": "latest",
+    "angular-dragdrop": "latest",
     "web-bootstrap": "./node_modules/meanio/resources/web-bootstrap.js",
     "angular-ui-select": "latest",
-    "angular-sanitize": "latest"
+    "angular-sanitize": "latest",
+    "jquery-ui": "~1.10.3"
   }
 }

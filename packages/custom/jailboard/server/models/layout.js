@@ -11,18 +11,38 @@ var mongoose = require('mongoose'),
  * Board Schema
  */
 var LayoutSchema = new Schema({
-  layoutID:{
-    type: Schema.ObjectId,
-    required: true
-  },
   nodeID:{
     type: Schema.ObjectId,
     ref: 'Nodes',
     required: true
   },
+  boardID:{
+    type: Schema.ObjectId,
+    ref: 'Boards',
+    required: true
+  },
+  deviceID:{
+    type: Schema.ObjectId,
+    ref: 'Devices',
+    required: true
+  },
+  width:{
+    type: Number,
+    required: false,
+    default:4
+  },
+  active:{
+    type: Boolean,
+    required: false,
+    default:false
+  },
   graphType:{
       type:String,
-  default:'null'
+  default:'scatter'
+  },
+  title:{
+      type:String,
+  default:'display'
   }
 });
 

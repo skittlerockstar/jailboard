@@ -17,7 +17,7 @@ body{
     background-color:whitesmoke;
 }
 #jailboardControllPanel{
-    position:fixed;
+    position:absolute;
     z-index:90;
     width:100%;
     top:25px;
@@ -140,6 +140,7 @@ body{
             $timing: null,
             $delay: null
             );
+            width:50%;
     }
     &.down{
         @include mui-slide(
@@ -211,5 +212,17 @@ body{
 #panelContainer{
     .innerContainer{
         padding:0px 70px;
+        #panels{
+            .panelcontainer{
+                min-height: 250px;
+                .panel{
+                    min-height: 250px;
+                    padding:20px;
+                }
+                #plotly{
+                    
+                }
+            }
+        }
     }
 }
