@@ -40,10 +40,10 @@ module.exports = function(Layouts) {
          * Create an layout
          */
         create: function(req, res) {
-            console.log(req.params);
             console.log(req.body);
-            var layout = new Layout(req.params);
+            var layout = new Layout(req.body);
             layout.save(function(err) {
+                console.log(err);
                 if (err) {
                     return res.status(500).json({
                         error: err
@@ -56,29 +56,10 @@ module.exports = function(Layouts) {
          * Update an layout
          */
         update: function(req, res) {
-            var layout = req.layout;
-
-            layout = _.extend(layout, req.body);
-
-
-            layout.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot update the layout'
-                    });
-                }
-
-                Layouts.events.publish({
-                    action: 'updated',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: layout.title,
-                    url: config.hostname + '/layouts/' + layout._id
-                });
-
-                res.json(layout);
-            });
+            var query = {"_id":req.body._id};
+           Layout.findByIdAndUpdate(req.body._id,req.body,function(){
+               res.json('bingo');
+           });
         },
         /**
          * Delete an layout

@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
 var LayoutSchema = new Schema({
   nodeID:{
     type: Schema.ObjectId,
-    ref: 'Nodes',
+    ref:"Nodes",
     required: true
   },
   boardID:{
@@ -34,7 +34,7 @@ var LayoutSchema = new Schema({
   active:{
     type: Boolean,
     required: false,
-    default:false
+    default:true
   },
   graphType:{
       type:String,

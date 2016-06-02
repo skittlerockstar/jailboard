@@ -55,18 +55,22 @@ module.exports = function(DataSources) {
            function createDevice(incoming){
                var device = new Devices({"deviceID":incoming.deviceID,"accessToken":"randomshit"});
                  device.save(function(err,devres){
+                     console.log(err);
                           createNode(incoming,devres);
                  });
            }
            function createNode(incoming,devres){
                 var node = new Nodes({"typeID":incoming.typeID,"nodeID":incoming.nodeID,"deviceID":devres._id,"boardID":"5731b663c11caa9818fed312"});
                  node.save(function(err,noderes){
+                     console.log(err);
                      createData(incoming,devres,noderes);
                   });
            }
            function createData(incoming,devres,noderes){
                var data = new Datas({"data":incoming.data,"nodeID":noderes._id,"created":date});
-               data.save(function(err,c){
+                data.save(function(err,c){
+                    console.log(err);
+                    console.log(c);
                });
            }
            res.json('BINGO');
@@ -144,18 +148,20 @@ module.exports = function(DataSources) {
          * List of Datas
          */
         all: function(req, res) {
+            console.log(req.query);
             var limit = req.query.limit || null;
             var sort = req.query.sort || -1;
             var nodeID = req.query.nodeID || null;
-            console.log(req.query);
             limit = parseInt(limit);
-            Datas.find({"nodeID":nodeID},{},{ "sort": { 'created' : sort },"limit":limit }).exec(function(err, data) {
+            Datas.find({"nodeID":nodeID}).sort({'created':-1}).limit(limit).exec(function(err, data) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the data'
                     });
                 }
+                console.log('');
                 console.log(data);
+                console.log('');
                 res.json({'datas':data});
             });
 

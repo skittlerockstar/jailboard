@@ -7,7 +7,7 @@ and open the template in the editor.
     Created on : Mar 31, 2016, 2:58:54 PM
     Author     : max
 */
-
+@import 'colorscheme/colorscheme.scss';
 @import 'motion-ui/motion-ui.scss';
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic);
 /*@import 'colorscheme';*/
@@ -15,6 +15,9 @@ and open the template in the editor.
 $boardheight:350px;
 body{
     background-color:whitesmoke;
+}
+.left{
+    float:left;
 }
 #jailboardControllPanel{
     position:absolute;
@@ -25,12 +28,21 @@ body{
     background-color:white;
     transition-property:background-color;
     transition-duration:500ms;
+    height:100%;
+}
+#bg {
+    height:100%;
+    &.up{
+        background-color:white;
+    }  
     &.down{
         background-color:#F0F0F0;
-        
+
     }
-    height:100%;
-    
+    position:fixed;
+    width:100%;
+        transition-property:background-color;
+    transition-duration:500ms;
 }
 #JailboardBar{
     width:100%;
@@ -40,10 +52,10 @@ body{
     .glyphicon-wrench:hover{
         text-shadow:0px 0px 5px white;
     }
-     box-shadow:0px 0px 0px black;
+    box-shadow:0px 0px 0px black;
     &.down{ 
-       transition-property: box-shadow;
-       box-shadow:0px 0px 5px black;
+        transition-property: box-shadow;
+        box-shadow:0px 0px 5px black;
     }
 }
 #JailboardBar{
@@ -81,14 +93,14 @@ body{
     border-width: 0 30px 30px 30px;
     border-color: transparent transparent #e20613;
     .glyphicon{
-            top:8px;
-            left:-8px;
-            cursor: pointer;
-            color:white;
-        }
+        top:8px;
+        left:-8px;
+        cursor: pointer;
+        color:white;
+    }
     &.up{
         @include mui-slide(
-            $state: out,
+        $state: out,
             $direction:up,
             $amount:100%,
             $duration: null,
@@ -98,7 +110,7 @@ body{
     }
     &.down{
         @include mui-slide(
-            $state: in,
+        $state: in,
             $direction:up,
             $amount:100%,
             $duration: null,
@@ -133,18 +145,18 @@ body{
     }
     &.up{
         @include mui-slide(
-            $state: in,
+        $state: in,
             $direction:up,
             $amount:150%,
             $duration: null,
             $timing: null,
             $delay: null
             );
-            width:50%;
+        width:50%;
     }
     &.down{
         @include mui-slide(
-            $state: in,
+        $state: in,
             $direction:down,
             $amount:150%,
             $duration: null,
@@ -162,7 +174,7 @@ body{
     transition-property:all !important;
     &.up{
         @include mui-slide(
-            $state: in,
+        $state: in,
             $direction:up,
             $amount:95%,
             $duration: null,
@@ -173,7 +185,7 @@ body{
     &.down{
         margin-top:50px;
         @include mui-slide(
-            $state: out,
+        $state: out,
             $direction:down,
             $amount:90%,
             $duration: null,
@@ -197,14 +209,14 @@ body{
     z-index:999;
     &.show{
         @include mui-fade( 
-            $state: out,
+        $state: out,
             $from: 1,
             $to: 0,
             $duration: 100,
             $timing: null,
             $delay: null
-        );
-            transition-property:all !important;
+            );
+        transition-property:all !important;
     }
     &.mui-leave-active{height:0;}
 }
@@ -217,10 +229,56 @@ body{
                 min-height: 250px;
                 .panel{
                     min-height: 250px;
-                    padding:20px;
+                    padding:15px;
+                    .panelControls{
+
+                    }
+                    h3{
+                        display: inline-block;
+                        margin-top:0;
+                    }
+                    .panelTitle{
+                        font-size:24px;
+                        margin-bottom: 5px;
+
+                    }
+                    .editLayout{
+                        float:right;
+                        background-color:$themeColor;
+                        margin: 0 0 5px 0;
+                        border-radius:5px;
+                        span{
+                              border-radius:5px;
+                            &:nth-child(2){
+                                    border-radius: 5px 0px 0px 5px;
+                            }
+                            &:last-child{
+                                   border-radius: 0px 5px 5px 0;
+                            }
+                            color:white;
+                            padding:10px;
+                            display:inline-block;
+                            overflow:hidden;
+                            float: left;
+                            &:hover{
+                                background-color:$themeColor2;
+                            }
+                        }
+
+                    }
+                    .plotlyLayout{
+                        clear:both;
+                        margin-top:5px;
+                        .svg-container{
+                        overflow:hidden;
+                        }
+                    }
                 }
-                #plotly{
-                    
+                .panel.collapsed{
+                    background-color:whitesmoke;   
+                }
+                .js-plotly-plot{
+                    border:solid 1px lightgray;
                 }
             }
         }

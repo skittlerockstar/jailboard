@@ -62,8 +62,8 @@ app.route('/api/data/create')
  
 //layouts routes
   app.route('/api/layouts')
-    .get(layouts.all);
-    app.route('/api/layouts/:boardID/:nodeID/:deviceID')
+    .get(layouts.all)
+    .put(layouts.update)
             .post(layouts.create);
 //permissions routes
   app.route('/api/permissions')

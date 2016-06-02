@@ -7,7 +7,28 @@ and open the template in the editor.
     Created on : Mar 31, 2016, 2:58:54 PM
     Author     : max
 */
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 5, 2016, 1:13:45 PM
+    Author     : max
+*/
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic);
+* {
+  transition-duration: 200ms;
+  transition-property: all;
+  cursor: default;
+  font-family: 'Ubuntu', sans-serif; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #666; }
+
+.glyphicon {
+  cursor: pointer; }
+
 .slide-in-down.mui-enter {
   transition-duration: 500ms;
   transition-timing-function: linear;
@@ -462,6 +483,9 @@ and open the template in the editor.
 body {
   background-color: whitesmoke; }
 
+.left {
+  float: left; }
+
 #jailboardControllPanel {
   position: absolute;
   z-index: 90;
@@ -472,7 +496,16 @@ body {
   transition-property: background-color;
   transition-duration: 500ms;
   height: 100%; }
-  #jailboardControllPanel.down {
+
+#bg {
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  transition-property: background-color;
+  transition-duration: 500ms; }
+  #bg.up {
+    background-color: white; }
+  #bg.down {
     background-color: #F0F0F0; }
 
 #JailboardBar {
@@ -639,4 +672,37 @@ body {
     min-height: 250px; }
     #panelContainer .innerContainer #panels .panelcontainer .panel {
       min-height: 250px;
-      padding: 20px; }
+      padding: 15px; }
+      #panelContainer .innerContainer #panels .panelcontainer .panel h3 {
+        display: inline-block;
+        margin-top: 0; }
+      #panelContainer .innerContainer #panels .panelcontainer .panel .panelTitle {
+        font-size: 24px;
+        margin-bottom: 5px; }
+      #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout {
+        float: right;
+        background-color: #39aadf;
+        margin: 0 0 5px 0;
+        border-radius: 5px; }
+        #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span {
+          border-radius: 5px;
+          color: white;
+          padding: 10px;
+          display: inline-block;
+          overflow: hidden;
+          float: left; }
+          #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:nth-child(2) {
+            border-radius: 5px 0px 0px 5px; }
+          #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:last-child {
+            border-radius: 0px 5px 5px 0; }
+          #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:hover {
+            background-color: #e20613; }
+      #panelContainer .innerContainer #panels .panelcontainer .panel .plotlyLayout {
+        clear: both;
+        margin-top: 5px; }
+        #panelContainer .innerContainer #panels .panelcontainer .panel .plotlyLayout .svg-container {
+          overflow: hidden; }
+    #panelContainer .innerContainer #panels .panelcontainer .panel.collapsed {
+      background-color: whitesmoke; }
+    #panelContainer .innerContainer #panels .panelcontainer .js-plotly-plot {
+      border: solid 1px lightgray; }

@@ -7,68 +7,79 @@
     <div class="row" id="panel">
         <div class="col-xs-12">
             <div class="row" id="panels">
+                <div id="displaySizer" class="col-xs-12 " ng-class="{false:'hidden',true:''}[editMode]">
+                    <h4>Display Size </h4>
 
-                <div ng-repeat="layout in layouts" class="col-xs-{{layout.width}} panelcontainer">
-                    <div  class="panel">
-                        <div class="panelControlls">
-                            <h3>
-                                <span>{{layout.name}}</span>
-                            </h3>
-                        </div>
-                        <div id="{{layout._id}}" ng-init="initData(layout._id, layout.graphType, layout.nodeID, layout.width)"  class="panel">
-
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                        <div ng-repeat="i in getNumber(12) track by $index" class="btn-group" role="group">
+                            <button type="button" ng-mouseOver="setPanelSize($index + 1)" class="btn" ng-class="activePanel.panelWidth == $index + 1 ? 'active btn-primary' : 'btn-default'">{{$index + 1}}</button>
                         </div>
                     </div>
                 </div>
-                <div id='newPanel' ng-hide='true'>
+                <div id="newPanel" ng-hide="addingNode == null" class='col-xs-{{newPanel.width}} panelcontainer' >
 
-                    <div>
-                        <div class="col-xs-12">
-                            <h4>Display Size</h4>
+                    <div  class='panel'>
+                        <h3 class="text-center">Create {{addingNode.nodeType}} display</h3>
+                        <form name="layoutForm" ng-submit="layout = createLayout(layoutForm)" >
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">Name </span>
+                                <input type="text" ng-model="newPanel.title" name='title' ng-init="newPanel.title = 'newPanel'" class="form-control" placeholder="e.g. office temperature"  aria-describedby="basic-addon1">
+                            </div>
 
-                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                <div ng-repeat="i in getNumber(12) track by $index" class="btn-group" role="group">
-                                    <button type="button" ng-click="setPanelSize($index + 1)" class="btn btn-default">{{$index + 1}}</button>
+                            <div ng-if="availableNodes.length !== 0">
+                                <div class=""><h4 class="text-center">Select device</h4>
+                                    <div ng-repeat="node in availableNodes" class="radio-inline">
+                                        <ul class="list-group " ng-click="setSelected($event , node.deviceID)">
+                                            <li uib-tooltip=" Select {{addingNode.nodeType}} in device {{node.deviceID}}" class="list-group-item input-group " ng-class="node.deviceID == selectedDevice ? 'active' : (node.deviceID != selectedDevice ? '' : '')"  >
+                                                <label for="{{node.deviceID}}" class="list-group-item-heading ">
+                                                    <button type='button' ng-class="node.deviceID == selectedDevice ? 'disabled btn-primary' : (node.deviceID != selectedDevice ? 'btn-default' : '')" class="btn " ng-click="setSelected(node.deviceID)" >Device {{node.deviceID}} </button>
+                                                    <input style="display:none;" type="radio" name="device" id="{{node.deviceID}}" ng-model="newPanel.deviceID" ng-init="newPanel.deviceID = node._id" checked>
+                                                </label>
+                                            </li>
+                                            <li class="list-group-item" ng-class="node.deviceID != selectedDevice ? 'disabled' : (nodes.nodeType == addingNode.nodeType ? 'list-group-item-info' : '')"  ng-repeat="nodes in node.nodes" >
+                                             {{nodes.nodeType}}  <input style="display:none;" ng-class="node.deviceID" ng-if="nodes.nodeType == addingNode.nodeType" type="radio" id="{{nodes._id}}" ng-model="newPanel.nodeID" name='nodeID' ng-init='newPanel.nodeID = nodes._id' value="nodes._id" />
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
+                                <!--<h5>TODO graphtypes</h5>-->
+                                <!--                        <div class="input-group">
+                                                            <span class="input-group-addon" id="basic-addon1">@</span>
+                                                            <input type="text" class="form-control" placeholder="e.g. office temperature" aria-describedby="basic-addon1">
+                                </div>--><input type="hidden" ng-model="newPanel.width" name='panelWidth' ng-init='newPanel.width = 6' value="{{panelSize}}" />
+                                <input type="submit"  class="btn btn-primary" class="form-control" value="save display">
+
+                                </form>
                             </div>
-                        </div>
-                        <div  class='col-xs-{{panelSize}} panelcontainer'>
-                            <div  class='panel'>
-                                <h3 class="text-center">Create {{addingNode.nodeType}} display</h3>
-                                <form name="layoutForm" ng-submit="layout = createLayout(layoutForm)" >
-                                    <div class="input-group">
-                                        <span class="input-group-addon" id="basic-addon1">Name </span>
-                                        <input type="text" ng-model="layoutFormData.name" class="form-control" placeholder="e.g. office temperature" name="layoutName" aria-describedby="basic-addon1">
-                                        <input type="hidden" ng-model="layoutFormData.names" class="form-control" placeholder="e.g. office temperature"  name="layoutNames" aria-describedby="basic-addon1">
-                                    </div>
-                                    
-                                    <div ng-if="availableNodes.length !== 0">
-                                        <div class=""><h4 class="text-center">Select device</h4>
-                                            <div ng-repeat="node in availableNodes" class="radio-inline">
-                                                <ul class="list-group " ng-click="setSelected(node.deviceID)">
-                                                    <li class="list-group-item input-group " ng-class="node.deviceID == selectedDevice ? 'active' : (node.deviceID != selectedDevice ? '' : '')"  >
-                                                        <label for="{{node.deviceID}}" class="list-group-item-heading ">
-                                                            <button ng-class="node.deviceID == selectedDevice ? 'disabled btn-primary' : (node.deviceID != selectedDevice ? 'btn-default' : '')" class="btn " ng-click="setSelected(node.deviceID)" >Device {{node.deviceID}} </button>
-                                                            <input style="display:none;" type="radio" name="optionsRadios" id="{{node.deviceID}}" value="{{node.deviceID}}" checked>
-                                                        </label>
-                                                    </li>
-                                                    <li class="list-group-item" ng-class="node.deviceID != selectedDevice ? 'disabled' : (nodes.nodeType == addingNode.nodeType ? 'list-group-item-info' : '')"  ng-repeat="nodes in node.nodes" >{{nodes.nodeType}}</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!--<h5>TODO graphtypes</h5>-->
-                                        <!--                        <div class="input-group">
-                                                                    <span class="input-group-addon" id="basic-addon1">@</span>
-                                                                    <input type="text" class="form-control" placeholder="e.g. office temperature" aria-describedby="basic-addon1">
-                                        </div>--><input type="hidden" ng-model="layoutFormData.panelWidth" name='panelWidth' ng-init='5' value="{{panelSize}}" />
-                                        <input type="submit"  class="btn btn-primary" class="form-control" value="save display">
-                                        
-                                        </form>
-                                    </div>
+                    </div>
+                </div>
+                <!--loadingscreen-->
+                <div ng-hide="true" id="loadingPanel" class="col-xs-2 col-xs-offset-5">
+                    <div class="panel">
+                        <h5 class="text-center">Loading</h5>
+                    </div>
+                </div>
+                <!--All layouts displayed-->
+                <div ng-repeat="layout in layouts" class="col-xs-{{layout.width}} panelcontainer">
+
+                    <div  class="panel" ng-class="{false:'',true:'collapsed'}[collapsed]">
+                        <div class="panelControlls">
+                            <div>
+                            <h3 class="left">
+                                <span  ng-show="activePanel != layout" >{{layout.title}}</span>
+                                </h3>
+                            <input ng-model="layout.title" class="panelTitle"  ng-show="activePanel == layout" ng-value="activePanel.title" />
+                            <div class="editLayout">
+                            <span  ng-show="activePanel != layout" ng-click="setActivePanel(layout)">Edit</span>
+                            <span  ng-show="activePanel == layout" ng-click="saveLayout(layout)">Save</span>
+                            <span  ng-show="activePanel == layout" ng-click="exitEditMode(layout)">Undo</span>
                             </div>
+                        <div class="plotlyLayout" id="{{layout._id}}" ng-init="initData(layout._id, layout.graphType, layout.nodeID, layout.width)"  class="panel">
+
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

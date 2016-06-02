@@ -1,3 +1,4 @@
+
 <section id="jailboardControllPanel"  ng-class="{true:'up', false:'down '}[collapsed]"  ng-controller="CtrlPanelController" >
 <!--    //IN Sources
     //IN Add Panel
@@ -7,6 +8,7 @@
     //IN Customizer ( dragabble size )
     //IN Customize Toolbar Pos
     //IN Customize ColorScheme-->
+<div id='bg' ng-class="{true:'up', false:'down '}[collapsed]"></div>
     <div id="JailboardBar" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]">
         <div id='controllsContainer' ng-include="'jailboard/views/includes/controllpanelControlls.html'"></div>
         <div id="barController" class="scale-out-down fast" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]" ng-click="collapsed =!collapsed;" >
