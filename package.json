@@ -25,6 +25,7 @@
     "autoprefixer": "^6.3.6",
     "body-parser": "latest",
     "bower": "latest",
+    "chart.js": "^2.1.4",
     "compression": "latest",
     "connect-flash": "latest",
     "connect-modrewrite": "latest",

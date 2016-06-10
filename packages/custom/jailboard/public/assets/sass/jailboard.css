@@ -493,16 +493,16 @@ body {
   top: 25px;
   left: 0;
   background-color: white;
-  transition-property: background-color;
-  transition-duration: 500ms;
+  transition-property: none !important;
+  transition-duration: 0;
   height: 100%; }
 
 #bg {
   height: 100%;
   position: fixed;
   width: 100%;
-  transition-property: background-color;
-  transition-duration: 500ms; }
+  transition-property: none !important;
+  transition-duration: 0; }
   #bg.up {
     background-color: white; }
   #bg.down {
@@ -517,7 +517,7 @@ body {
   #JailboardBar .glyphicon-wrench:hover {
     text-shadow: 0px 0px 5px white; }
   #JailboardBar.down {
-    transition-property: box-shadow;
+    transition-property: none !important;
     box-shadow: 0px 0px 5px black; }
 
 #JailboardBar {
@@ -527,6 +527,7 @@ body {
 #JailboardBar.down.mui-enter {
   transition-duration: 500ms;
   transition-timing-function: linear;
+  transition-duration: 0;
   transform: translateY(-80%);
   transition-property: transform, opacity;
   backface-visibility: hidden; }
@@ -537,6 +538,7 @@ body {
 #JailboardBar.up.mui-leave {
   transition-duration: 500ms;
   transition-timing-function: linear;
+  transition-duration: 0;
   transform: translateY(0);
   transition-property: transform, opacity;
   backface-visibility: hidden; }
@@ -562,6 +564,7 @@ body {
   #barController.up.mui-leave {
     transition-duration: 500ms;
     transition-timing-function: linear;
+    transition-duration: 0;
     transform: translateY(0);
     transition-property: transform, opacity;
     backface-visibility: hidden; }
@@ -570,6 +573,7 @@ body {
   #barController.down.mui-enter {
     transition-duration: 500ms;
     transition-timing-function: linear;
+    transition-duration: 0;
     transform: translateY(100%);
     transition-property: transform, opacity;
     backface-visibility: hidden; }
@@ -603,6 +607,7 @@ body {
     .dropControllerContainer.up.mui-enter {
       transition-duration: 500ms;
       transition-timing-function: linear;
+      transition-duration: 0;
       transform: translateY(150%);
       transition-property: transform, opacity;
       backface-visibility: hidden; }
@@ -611,6 +616,7 @@ body {
   .dropControllerContainer.down.mui-enter {
     transition-duration: 500ms;
     transition-timing-function: linear;
+    transition-duration: 0;
     transform: translateY(-150%);
     transition-property: transform, opacity;
     backface-visibility: hidden; }
@@ -622,10 +628,11 @@ body {
   height: 350px;
   bottom: 350px;
   margin-top: 60px;
-  transition-property: all !important; }
+  transition-property: none !important; }
   #panelContainer.up.mui-enter {
     transition-duration: 500ms;
     transition-timing-function: linear;
+    transition-duration: 0;
     transform: translateY(95%);
     transition-property: transform, opacity;
     backface-visibility: hidden; }
@@ -636,6 +643,7 @@ body {
     #panelContainer.down.mui-leave {
       transition-duration: 500ms;
       transition-timing-function: linear;
+      transition-duration: 0;
       transform: translateY(0);
       transition-property: transform, opacity;
       backface-visibility: hidden; }
@@ -654,11 +662,11 @@ body {
   top: 0;
   z-index: 999; }
   #overlay.show {
-    transition-property: all !important; }
+    transition-property: none !important; }
     #overlay.show.mui-leave {
       transition-duration: 500ms;
       transition-timing-function: linear;
-      transition-duration: 100;
+      transition-duration: 0;
       opacity: 1;
       transition-property: opacity; }
     #overlay.show.mui-leave.mui-leave-active {
@@ -666,43 +674,66 @@ body {
   #overlay.mui-leave-active {
     height: 0; }
 
+#panelContainer #placeHolder {
+  float: left;
+  height: 380px;
+  display: none; }
+  #panelContainer #placeHolder .clearfix {
+    clear: both;
+    height: 345px;
+    border: dashed 5px gray; }
+
 #panelContainer .innerContainer {
   padding: 0px 70px; }
-  #panelContainer .innerContainer #panels .panelcontainer {
-    min-height: 250px; }
-    #panelContainer .innerContainer #panels .panelcontainer .panel {
-      min-height: 250px;
-      padding: 15px; }
-      #panelContainer .innerContainer #panels .panelcontainer .panel h3 {
-        display: inline-block;
-        margin-top: 0; }
-      #panelContainer .innerContainer #panels .panelcontainer .panel .panelTitle {
-        font-size: 24px;
-        margin-bottom: 5px; }
-      #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout {
-        float: right;
+  #panelContainer .innerContainer #panels .panelcontainer .panel {
+    height: 389px; }
+    #panelContainer .innerContainer #panels .panelcontainer .panel .panel-heading.panelControlls:after {
+      content: '';
+      display: block;
+      clear: both; }
+    #panelContainer .innerContainer #panels .panelcontainer .panel .panel-body {
+      height: 300px; }
+    #panelContainer .innerContainer #panels .panelcontainer .panel h3 {
+      display: inline-block;
+      margin: 10px 0; }
+    #panelContainer .innerContainer #panels .panelcontainer .panel .panelTitle {
+      font-size: 24px;
+      margin-bottom: 5px; }
+    #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout {
+      float: right;
+      margin: 0 0 5px 0;
+      border-radius: 5px; }
+      #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout .movePanel {
+        float: left;
+        margin-left: 5px; }
+        #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout .movePanel span {
+          color: gray;
+          background-color: white;
+          border-radius: 5px 5px 5px 5px !important; }
+          #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout .movePanel span:hover {
+            color: white; }
+      #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span {
+        border-radius: 5px;
         background-color: #39aadf;
-        margin: 0 0 5px 0;
-        border-radius: 5px; }
-        #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span {
-          border-radius: 5px;
-          color: white;
-          padding: 10px;
-          display: inline-block;
-          overflow: hidden;
-          float: left; }
-          #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:nth-child(2) {
-            border-radius: 5px 0px 0px 5px; }
-          #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:last-child {
-            border-radius: 0px 5px 5px 0; }
-          #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:hover {
-            background-color: #e20613; }
-      #panelContainer .innerContainer #panels .panelcontainer .panel .plotlyLayout {
-        clear: both;
-        margin-top: 5px; }
-        #panelContainer .innerContainer #panels .panelcontainer .panel .plotlyLayout .svg-container {
-          overflow: hidden; }
-    #panelContainer .innerContainer #panels .panelcontainer .panel.collapsed {
-      background-color: whitesmoke; }
-    #panelContainer .innerContainer #panels .panelcontainer .js-plotly-plot {
-      border: solid 1px lightgray; }
+        color: white;
+        padding: 10px;
+        display: inline-block;
+        overflow: hidden;
+        float: left; }
+        #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:nth-child(1) {
+          border-radius: 5px 0px 0px 5px; }
+        #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:nth-child(2) {
+          border-radius: 0px 5px 5px 0; }
+        #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:nth-child(3) {
+          border-radius: 5px 0px 0px 5px; }
+        #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:last-child {
+          border-radius: 0px 5px 5px 0; }
+        #panelContainer .innerContainer #panels .panelcontainer .panel .editLayout span:hover {
+          background-color: #e20613; }
+    #panelContainer .innerContainer #panels .panelcontainer .panel .plotlyLayout {
+      clear: both;
+      margin-top: 5px; }
+      #panelContainer .innerContainer #panels .panelcontainer .panel .plotlyLayout .svg-container {
+        overflow: hidden; }
+  #panelContainer .innerContainer #panels .panelcontainer .panel.collapsed {
+    background-color: whitesmoke; }

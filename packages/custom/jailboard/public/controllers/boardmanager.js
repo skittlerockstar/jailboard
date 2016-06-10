@@ -57,6 +57,7 @@
             return null;
         }
         $scope.deleteBoard = function(board){
+            console.log(board);
             var c = confirm("Are you sure you want to delete "+board.name);
             if(c){
                 board.$remove(function(response) {

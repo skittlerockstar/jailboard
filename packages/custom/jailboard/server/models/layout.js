@@ -40,6 +40,10 @@ var LayoutSchema = new Schema({
       type:String,
   default:'scatter'
   },
+  valueType:{
+      type:String,
+  default:'Celsius'
+  },
   title:{
       type:String,
   default:'display'

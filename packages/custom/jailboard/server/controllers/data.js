@@ -32,7 +32,7 @@ module.exports = function(DataSources) {
             var incoming = req.body;
             var rand = Math.round(Math.random()*50)+1;
             var date = new Date();
-            incoming.data = [rand];
+//            incoming.data = [rand];
            //check if device exists
            Devices.findOne({"deviceID":incoming.deviceID},"_id",function(err,result){
              // if result check if sensor exists / else create new device and sensor.
@@ -41,7 +41,10 @@ module.exports = function(DataSources) {
                     if(result === null){
                         createDevice(incoming);
                     }else{
-                        Nodes.findOne({"deviceID":result._id,},function(r,noderes){
+                        console.log(result);
+                        Nodes.findOne({"deviceID":result._id,"nodeID":incoming.nodeID},function(r,noderes){
+                            console.log('does it exists');
+                            console.log(noderes);
                             if(noderes === null){
                                  createNode(incoming,result);
                             }else{
@@ -56,6 +59,7 @@ module.exports = function(DataSources) {
                var device = new Devices({"deviceID":incoming.deviceID,"accessToken":"randomshit"});
                  device.save(function(err,devres){
                      console.log(err);
+                     console.log('Device created');
                           createNode(incoming,devres);
                  });
            }
@@ -63,6 +67,7 @@ module.exports = function(DataSources) {
                 var node = new Nodes({"typeID":incoming.typeID,"nodeID":incoming.nodeID,"deviceID":devres._id,"boardID":"5731b663c11caa9818fed312"});
                  node.save(function(err,noderes){
                      console.log(err);
+                      console.log('Node created');
                      createData(incoming,devres,noderes);
                   });
            }

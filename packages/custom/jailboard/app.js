@@ -43,6 +43,7 @@ Jailboard.register(function(app, auth, database, http) {
 //    roles: ['admin','developer'],
 //    menu: 'main',
 //  });
+
 Jailboard.angularDependencies(['ngDragDrop']);
   Jailboard.events.defaultData({
     type: 'post',
@@ -69,8 +70,9 @@ Jailboard.angularDependencies(['ngDragDrop']);
 //    menu: 'main'
 //  });
 Jailboard.aggregateAsset('css', 'boardcontrolls.css');
+  Jailboard.aggregateAsset('js', 'dist/Chart.bundle.min.js');
+    Jailboard.aggregateAsset('js','plotly-latest.min.js');
   Jailboard.aggregateAsset('css', 'jailboard.css');
-  Jailboard.aggregateAsset('js','plotly-latest.min.js');
     Jailboard.aggregateAsset('css', 'boardmanager.css');
     
 var settings = {

@@ -65,24 +65,14 @@ module.exports = function(Layouts) {
          * Delete an layout
          */
         destroy: function(req, res) {
-            var layout = req.layout;
-
-
-            layout.remove(function(err) {
+            var layout = req.query._id;
+            
+            Layout.find({ '_id':layout }).remove(function(err,respons) {
                 if (err) {
                     return res.status(500).json({
-                        error: 'Cannot delete the layout'
+                        error: 'Cannot delete the board'
                     });
                 }
-
-                Layouts.events.publish({
-                    action: 'deleted',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: layout.title
-                });
-
                 res.json(layout);
             });
         },

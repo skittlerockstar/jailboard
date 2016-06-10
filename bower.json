@@ -14,6 +14,7 @@
     "web-bootstrap": "./node_modules/meanio/resources/web-bootstrap.js",
     "angular-ui-select": "latest",
     "angular-sanitize": "latest",
-    "jquery-ui": "~1.10.3"
+    "jquery-ui": "~1.10.3",
+    "Chart.js": "^2.1.4"
   }
 }

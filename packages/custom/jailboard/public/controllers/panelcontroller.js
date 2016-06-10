@@ -10,7 +10,6 @@
 
     CtrlPanelController.$inject = ['$interval', 'Nodes', 'Devices', 'Layouts', 'Types', 'Datas', 'Boards', '$stateParams', '$scope', '$timeout', 'Global', 'Jailboard', '$http'];
     LayoutController.$inject = ['$interval', 'Nodes', 'Devices', 'Layouts', 'Types', 'Datas', 'Boards', '$stateParams', '$scope', '$timeout', 'Global', 'Jailboard', '$http'];
-
     function CtrlPanelController($interval, Nodes, Devices, Layouts, Types, Datas, Boards, $stateParams, $scope, $timeout, Global, Jailboard, $http) {
         $scope.global = Global;
         $scope.authorized = false;
@@ -25,6 +24,7 @@
         $scope.selectedDevice = "";
         $scope.availableNodes = {};
         $scope.types = {};
+        $scope.months = ["Jan","Feb"," Mar","Apr","May","June","July","Aug","Sept","Oct","Nov","Dec"];
         $scope.addingNode = null;
         $scope.editMode = false;
         $scope.getter = function (prop) {
@@ -49,6 +49,7 @@
         $scope.getLayouts = function () {
             Layouts.get({"boardID": $scope.boardID}, function (b) {
                 $scope.layouts = b.layouts;
+                console.log(b);
             });
         }
 
@@ -132,12 +133,13 @@
             }
         }
 
-        $scope.setSelected = function (d , cls) {
-         $("."+cls,d.currentTarget).prop('checked', true);
-         $scope.selectedDevice = cls;
-        }
+
         $scope.updateLayout = function (layout) {
-            Layouts.update(layout);
+            var l = jQuery.extend(true,{}, layout);
+            layout.chart.data.datasets[0].label = l.valueType;
+            layout.chart.update();
+            delete l.chart;
+            Layouts.update(l);
         }
         $scope.getTypes();
     }
@@ -150,110 +152,107 @@
             boardID: $scope.boardID,
             nodeID: null,
         };
-        $scope.initSizes = {};
-     
+
         $scope.hoveringPanel = null;
         $scope.updateData = function () {
-            
-            $scope.layouts.forEach(function(layout){
-                if($scope.hoveringPanel === layout._id) return;
-                $scope.Data.get({"limit": 100, "sort": -1,"nodeID":layout.nodeID}, function (d) {
-                    if(d.datas.length === 0) return;
-                    $scope.data = d.datas;
-                    var plotData = $scope.parsePlotly(d.datas);
-                    // make many modifications and redraw
-                    var graphDiv = document.getElementById(layout._id);
-                    var dat = $scope.parsePlotly(d.datas);
-                    var rangeB = graphDiv.data[0].x.length-1;
-                    var rangeE = graphDiv.data[0].x.length-30;
-                    if(dat[0].x[0] !== graphDiv.data[0].x[graphDiv.data[0].x.length-1]){
-                    dat.forEach(function(d){
-                        var last = graphDiv.data[0].x[rangeB];
-                        d.x.reverse();
-                        d.y.reverse();
-                        d.x.forEach(function(dx,i){
-                            var tn = Date.parse(dx);
-                            var to = Date.parse(last);
-                            
-                            if(tn > to ) {
-                                graphDiv.data[0].y.push(dat[0].y[i]);
-                                graphDiv.data[0].x.push(dx);
-                            }else return;
-                        });
-                    });
+            if($scope.layouts !== 'undefined'){
+            $scope.layouts.forEach(function (layout) {
+                if ($scope.hoveringPanel === layout._id)
+                    return;
+                $scope.Data.get({"limit": 20, "sort": -1, "nodeID": layout.nodeID}, function (d) {
+                   var chartData = layout.chart.chart.config.data;
+                   var pd = $scope.parsePlotly(d.datas);
+                   var test = pd[0].x.indexOf(chartData.labels[chartData.labels.length-1]);
+                   if(test <= 0){return;}else{
+                       pd[0].x= pd[0].x.slice(0, test);
+                       pd[0].y=pd[0].y.slice(0, test);
+                      
+                       chartData.labels = chartData.labels.slice(pd[0].y.length, chartData.datasets[0].length);
+                       chartData.datasets[0].data = chartData.datasets[0].data.slice(pd[0].y.length, chartData.datasets[0].data.length);
+                       chartData.labels = chartData.labels.concat(pd[0].x);
+                       chartData.datasets[0].data = chartData.datasets[0].data.concat(pd[0].y);
+                        chartData.datasets[0].backgroundColor = $scope.getColor(chartData.datasets[0].data);
+                       layout.chart.update();
+                    }
                     
-                    rangeB = Date.parse(graphDiv.data[0].x[rangeB]);
-                    rangeE = Date.parse(graphDiv.data[0].x[rangeE]);
-                    graphDiv.layout.xaxis = {range: [rangeE, rangeB]};
-                    console.log('testing');
-                    Plotly.redraw(graphDiv);
-                }
                 });
             });
+        }
         };
-
-        $scope.initData = function (id, graphType, nodeID, width) {
+        $scope.getColor = function (n) {
+                    var cd = [];
+                    var highest = 100;//Math.max.apply(Math, n);
+                    n.forEach(function (v) {
+                        var R = Math.floor((255 * v) / highest)
+                                , B = Math.floor((255 * (highest - v)) / highest);
+                        cd.push('rgba('+R+',0,'+B+',.8)');
+                    });
+                    console.log(cd);
+                    return cd;
+                };
+        $scope.initData = function (layout) {
             $scope.plotlyData = [];
-             $scope.initPanelEvents(id);
-            $scope.Data.get({"limit": 100, "nodeID": nodeID}, function (d) {
+            $scope.initPanelEvents(layout._id);
+            $scope.Data.get({"limit": 20, "nodeID": layout.nodeID}, function (d) {
                 $scope.data = d.datas;
                 $scope.plotlyData = $scope.parsePlotly(d.datas);
                 $scope.plotlyData[0].x.reverse();
                 $scope.plotlyData[0].y.reverse();
-                $scope.plotlyData[0].type = graphType;
-                $scope.initSizes[id] = $("#" + id)[0].getBoundingClientRect().width / width;
-                var w = $scope.initSizes[id];
-                if (d.datas.length != 0) {
-                    $scope.plotlyLayout = {
-                        autosize: true,
-                        width: w * width - 2,
-                        height: 250,
-                        margin: {
-                            l: 25,
-                            r: 0,
-                            b: 40,
-                            t: 20,
-                            pad: 0
-                        },
-                    };
-                    Plotly.newPlot(id, $scope.plotlyData, $scope.plotlyLayout);
-                }
+                $scope.plotlyData[0].type = layout.graphType;
+                var ctx = $("." + layout._id + ' canvas');
+                    var myLineChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: $scope.plotlyData[0].x,
+                            datasets: [{
+                                    label: layout.valueType,
+                                    data: $scope.plotlyData[0].y,
+                                    backgroundColor: $scope.getColor($scope.plotlyData[0].y)
+                                }]},
+                        options: {
+                            maintainAspectRatio: false,
+                            responsive:true,
+                            scales: {
+                                xAxes: [{
+                                        ticks: {
+                                            callback: function (dataLabel, index) {
+                                                return dataLabel;
+                                            }
+                                        }
+                                    }],
+                                yAxes: [{
+                                        height: 250
+                                    }]
+                            }
+                        }
+                    });
+                    layout.chart = myLineChart;
             });
         };
-        $scope.initPanelEvents = function(id){
-             $timeout(function () {
-            $("#"+id).parent().hover(function(){
-                $scope.hoveringPanel = id;
-            },function(){
-                $scope.hoveringPanel = null;
-            });
-            },200);
-        }
-        $scope.relayout = function (layout, width) {
-            $("#" + layout._id).css({opacity:0});
+        $scope.initPanelEvents = function (id) {
             $timeout(function () {
-                var w = $("#" + layout._id)[0].getBoundingClientRect().width -2;
-                var update = {
-                    width: w
-                }
-                Plotly.relayout(layout._id, update);
-               $("#" + layout._id).css({opacity:1});
+                $("#" + id).parent().hover(function () {
+                    $scope.hoveringPanel = id;
+                }, function () {
+                    $scope.hoveringPanel = null;
+                });
             }, 200);
-
         }
+
 //         $scope.initData();
-  
-         $scope.interval($scope.updateData, 1000);
+        $scope.interval($scope.updateData, 3000);
+
         $scope.parsePlotly = function (data) {
             var plotlyData = [{x: [], y: []}];
             data.forEach(function (n, d) {
-                var res = n.created.replace("T", " ");
-                var res = res.replace("Z", "");
+                var res = n.created;
                 plotlyData[0].y.push(n.data[0]);
-                plotlyData[0].x.push(res);
+                var date = Date.parse(res);
+                date = new Date(date);
+                var labels = date.getDate()+" "+$scope.months[date.getMonth()-1]+" "+ date.getFullYear()+" "+date.getHours() + ":" + date.getMinutes()+":"+date.getSeconds();
+                plotlyData[0].x.push(labels);
             });
             plotlyData[0].type = 'scatter';
-            //plotlyData[0].y.push(plotlyData[0].y[plotlyData[0].y.length]);
             return plotlyData;
         }
         $scope.setActivePanel = function (l) {
@@ -268,7 +267,7 @@
         $scope.setPanelSize = function (width) {
             if ($scope.addingNode == null) {
                 var layout = $scope.layouts[$scope.layouts.indexOf($scope.activePanel)];
-                $scope.relayout(layout, width);
+//                $scope.relayout(layout, width);
                 layout.width = width;
             } else {
                 $scope.newPanel.width = width;
@@ -283,7 +282,7 @@
             var editedLayout = $scope.layouts[$scope.layouts.indexOf($scope.activePanel)] = $scope.oldLayout;
             $scope.activePanel = null;
             $scope.setter('editMode', false);
-            $scope.relayout($scope.oldLayout);
+//            $scope.relayout($scope.oldLayout);
         }
         $scope.getNumber = function (n) {
             return new Array(n);
@@ -292,14 +291,63 @@
         $scope.createLayout = function (layout) {
             var newLayout = new Layouts($scope.newPanel);
             newLayout.boardID = $scope.boardID;
+            newLayout.nodeID = $scope.selectedNode;
             newLayout.$save(function (response, err) {
                 $scope.layouts.push(response);
-                $scope.addingNode = null;
-            $scope.setter('editMode', false);
+                $scope.setter('addingNode', null);
+                $scope.setter('editMode', false);
+//            $scope.relayout(response,response.width);
             });
             return null;
         }
+        $scope.setSelected = function (d, cls) {
+            $("." + cls, d.currentTarget).prop('checked', true);
+            $scope.selectedDevice = cls;
+            $scope.selectedNode = $(".selectedNode input", d.currentTarget.context)[0].id;
+        }
 
+//        $scope.dragginPanel = null;
+//        $scope.onStartDrag = function (e, u, l) {
+//            var dragIn = $(".panelcontainer." + l._id);
+//            $("#placeHolder").show();
+//            $scope.dragLayoutSize = l.width;
+////            $(dragIn).css({'position':'fixed'});
+//        }
+//        $scope.onDrop = function (e, u, l) {
+//            var graphs = $('canvas');
+//            $('.panelcontainer .panel').css({border: 'none'});
+//            var dragIn = $(".panelcontainer." + l._id);
+//            var currentDragging = $scope.layouts.indexOf(l);
+//            $(dragIn).removeAttr('style');
+//            var draggingOver = $scope.layouts.indexOf($scope.draggingPanel);
+//            console.log(currentDragging);
+//            var moved = $(graphs[currentDragging]).detach();
+//            var otherMoved = $(graphs[draggingOver]).detach();
+//            $('.' + $scope.layouts[currentDragging]._id + ' .panel-body').append(otherMoved);
+//            $('.' + $scope.layouts[draggingOver]._id + ' .panel-body').append(moved);
+//            var b = $scope.layouts[draggingOver];
+//            $scope.layouts[draggingOver] = $scope.layouts[currentDragging];
+//            $scope.layouts[currentDragging] = b;
+//            $scope.layouts[draggingOver].chart.update({});
+//        }
+//        $scope.movePanel = function (event, ui, layout, index) {
+//            $('.panelcontainer .panel').css({border: 'none'});
+//            var placeHolder = $("#placeHolder");
+//            var dragIn = ui.draggable.context;
+//            var dragOn = event.target;
+//            $('.panel', dragOn).css({border: 'solid 5px red'});
+//            $scope.draggingPanel = layout;
+//        }
+        $scope.deleteLayout = function (layout) {
+            var c = confirm("Are you sure you want to delete " + layout.title);
+            if (c) {
+                delete layout.chart;
+                Layouts.remove(layout, function (response) {
+                    var index = $scope.layouts.indexOf(layout);
+                    $scope.layouts.splice(index, 1);
+                });
+            }
+        }
 
 
     }
