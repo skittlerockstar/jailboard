@@ -1,5 +1,5 @@
 
-<section id="jailboardControllPanel"  ng-class="{true:'up', false:'down '}[collapsed]"  ng-controller="CtrlPanelController" >
+<section  id="jailboardControllPanel" ng-init="init()"  ng-class="{true:'up', false:'down '}[collapsed]"  ng-controller="CtrlPanelController" >
 <!--    //IN Sources
     //IN Add Panel
     //IN Load / save
@@ -8,21 +8,24 @@
     //IN Customizer ( dragabble size )
     //IN Customize Toolbar Pos
     //IN Customize ColorScheme-->
+<div ng-if="isAdmin">
 <div id='bg' ng-class="{true:'up', false:'down '}[collapsed]"></div>
     <div id="JailboardBar" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]">
         <div id='controllsContainer' ng-include="'jailboard/views/includes/controllpanelControlls.html'"></div>
-        <div id="barController" class="scale-out-down fast" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]" ng-click="collapsed =!collapsed;" >
+        <div id="barController" class="scale-out-down fast" ng-class="{true:'up bounce-out mui-leave  mui-leave-active', false:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]" ng-click="setter('collapsed',!getter('collapsed'))" >
                 <span class="glyphicon glyphicon-wrench"></span> 
         </div>
         <div class="dropControllerContainer scale-out-up fast" ng-class="{false:'up bounce-out mui-leave  mui-leave-active', true:'down bounce-out  mui-enter  mui-enter-active'}[collapsed]">
-        <div class="dropController" ng-click="collapsed =!collapsed;">
+        <div class="dropController" ng-click="setter('collapsed',!getter('collapsed'))">
     <span class="glyphicon glyphicon-wrench"></span> 
             </div>
 </div>
         
     </div>
-<section id="panelContainer" ng-class="{false:'down mui-leave bounce-out  mui-leave-active', true:'up mui-enter bounce-out  mui-enter-active'}[collapsed]" data-ng-include="'/jailboard/views/includes/panelboard.html'">
+</div>
+<section  id="panelContainer" ng-class="{false:'down mui-leave bounce-out  mui-leave-active', true:'up mui-enter bounce-out  mui-enter-active'}[collapsed]" data-ng-include="'/jailboard/views/includes/panelboard.html'">
     
 </section>
+
 <div id="overlay" class="show mui-leave" ng-class="{true:'mui-leave-active',false:''}[authorized]" ></div>
 </section>

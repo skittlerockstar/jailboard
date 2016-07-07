@@ -6,18 +6,44 @@
     .module('mean.jailboard')
     .controller('BoardManagerController', BoardManagerController);
 
-  BoardManagerController.$inject = ['Users', '$scope', 'Global','Boards','Nodes', 'Jailboard','MeanUser','$http'];
+  BoardManagerController.$inject = ['$interval', 'Users', '$scope', 'Global','Boards','Nodes', 'Jailboard','MeanUser','$http'];
   
-  function BoardManagerController(Users ,$scope, Global, Boards, Nodes, Jailboard ,MeanUser, $http) {
+  function BoardManagerController($interval,Users ,$scope, Global, Boards, Nodes, Jailboard ,MeanUser, $http) {
       $scope.global = Global;
         $scope.popup = false;
         $scope.board;
         $scope.boards;
+        $scope.setter = function(val,prop){
+            $scope[prop] = val;
+        }
+        $scope.getter = function(prop){
+            return $scope[prop];
+        }
+        $scope.isAdmin = function(){
+            if($.inArray('admin',MeanUser.user.roles) >=0 || $.inArray('developer',MeanUser.user.roles) >= 0 ) {return true;}
+            else {return false;}
+        }
+        $scope.loggedin = function(){
+            if(MeanUser.user._id === undefined){Jailboard.reLogin();}
+            else {return true;}
+        } 
+         $interval($scope.loggedin,500);
         $scope.init = function(){
-            Boards.query({},function(boards,err){
+          
+            var query;
+            if($scope.isAdmin()){
+               query = {};
+            }else{
+                query = {'ownerID':MeanUser.user._id};
+            }
+            Boards.query(query,function(boards,err){
                 $scope.boards = boards;
+                if(boards.length ==0){
+                    $scope.message = "There are no boards linked to your account";
+                }
                 boards.forEach(function(b,n){
-                    Nodes.count({'boardID':n._id},function(r,e){
+                    Nodes.count({'boardID':b._id},function(r,e){
+                        console.log(r);
                         b.nodes = r.nodeCount;
                     });
 //                    todo count users
@@ -30,7 +56,7 @@
             
         };
         $scope.setPopup=function(d){
-            $scope.popup = false;
+            $scope.setter(false,'popup');
         }
         $scope.addBoard = function(board){
             $scope.boards.push(board);
@@ -42,11 +68,12 @@
              $scope.board = null;
         }
         $scope.suspendBoard = function(board){
-            board.suspended = true;
+            board.suspended = !board.suspended;
              Boards.update(board);
         }
         $scope.createBoard = function(isValid,board){
             $scope.board = board;
+            console.log(board);
                 var newBoard = new Boards($scope.board);
                 newBoard.$save(function(response,err) {
                    
@@ -72,9 +99,11 @@
           Boards.query({},function(boards){
             console.log(boards);
           });
-                Users.query({},'name', function (users) {
-                    $scope.users = users;
-                });
+          if($scope.isAdmin()){
+        Users.query({},'name', function (users) {
+            $scope.users = users;
+        });
+    }
   }
 
 })();

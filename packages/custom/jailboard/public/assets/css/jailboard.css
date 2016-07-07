@@ -672,6 +672,23 @@ body {
 .left {
   float: left; }
 
+#dateFrom, #dateTo {
+  float: left;
+  height: 33px;
+  padding: 0px;
+  margin: 1px 0px 0px;
+  border-radius: 0px;
+  border-top: 1px gray solid;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid gray 1px;
+  border-width: 1px medium;
+  border-style: solid none;
+  border-color: gray -moz-use-text-color;
+  margin-top: 1px;
+  text-align: center;
+  width: 110px; }
+
 #jailboardControllPanel {
   position: absolute;
   z-index: 90;

@@ -8,15 +8,17 @@
             .controller('LayoutController', LayoutController)
             ;
 
-    CtrlPanelController.$inject = ['$interval', 'Nodes', 'Devices', 'Layouts', 'Types', 'Datas', 'Boards', '$stateParams', '$scope', '$timeout', 'Global', 'Jailboard', '$http'];
+    CtrlPanelController.$inject = ['MeanUser','$interval', 'Nodes', 'Devices', 'Layouts', 'Types', 'Datas', 'Boards', '$stateParams', '$scope', '$timeout', 'Global', 'Jailboard', '$http'];
     LayoutController.$inject = ['$interval', 'Nodes', 'Devices', 'Layouts', 'Types', 'Datas', 'Boards', '$stateParams', '$scope', '$timeout', 'Global', 'Jailboard', '$http'];
-    function CtrlPanelController($interval, Nodes, Devices, Layouts, Types, Datas, Boards, $stateParams, $scope, $timeout, Global, Jailboard, $http) {
+    function CtrlPanelController(MeanUser,$interval, Nodes, Devices, Layouts, Types, Datas, Boards, $stateParams, $scope, $timeout, Global, Jailboard, $http) {
         $scope.global = Global;
-        $scope.authorized = false;
-        checkUserStatus($http, Jailboard, $scope);
+        $scope.defaultRange = {s:new Date(),e:new Date()};
+        $scope.panelController = null;
+        $scope.isAdmin = checkUserStatus(MeanUser);
         $scope.rotate = false;
         $scope.collapsed = false;
         $scope.addDataSource = false;
+        $scope.authorized = true;
         $scope.board = '';
         $scope.boardID = $stateParams.boardID;
         $scope.Data = Datas;
@@ -31,20 +33,26 @@
             return $scope[prop];
         };
         $scope.setter = function (prop, val) {
+            console.log($scope[prop]);
             $scope[prop] = val;
+             console.log($scope[prop]);
         };
-        $scope.animDelay = function () {
-            if (this.collapsed != this.rotate) {
-                if (this.rotate == null) {
-                    this.rotate = this.collapsed;
-                } else {
-                    this.rotate = null;
-                    $timeout(function () {
-                        $scope.rotate = $scope.collapsed;
-                    }, 100);
-                }
-            }
-        };
+        $scope.init = function(){
+            $scope.getBoard();
+            console.log(Chart.defaults);
+        }
+//     $scope.animDelay = function () {
+//            if (this.collapsed != this.rotate) {
+//                if (this.rotate == null) {
+//                    this.rotate = this.collapsed;
+//                } else {
+//                    this.rotate = null;
+//                    $timeout(function () {
+//                        $scope.rotate = $scope.collapsed;
+//                    }, 100);
+//                }
+//            }
+//        };
 
         $scope.getLayouts = function () {
             Layouts.get({"boardID": $scope.boardID}, function (b) {
@@ -154,31 +162,31 @@
         };
 
         $scope.hoveringPanel = null;
-        $scope.updateData = function () {
-            if($scope.layouts !== 'undefined'){
-            $scope.layouts.forEach(function (layout) {
-                if ($scope.hoveringPanel === layout._id)
-                    return;
-                $scope.Data.get({"limit": 20, "sort": -1, "nodeID": layout.nodeID}, function (d) {
-                   var chartData = layout.chart.chart.config.data;
-                   var pd = $scope.parsePlotly(d.datas);
-                   var test = pd[0].x.indexOf(chartData.labels[chartData.labels.length-1]);
-                   if(test <= 0){return;}else{
-                       pd[0].x= pd[0].x.slice(0, test);
-                       pd[0].y=pd[0].y.slice(0, test);
-                      
-                       chartData.labels = chartData.labels.slice(pd[0].y.length, chartData.datasets[0].length);
-                       chartData.datasets[0].data = chartData.datasets[0].data.slice(pd[0].y.length, chartData.datasets[0].data.length);
-                       chartData.labels = chartData.labels.concat(pd[0].x);
-                       chartData.datasets[0].data = chartData.datasets[0].data.concat(pd[0].y);
-                        chartData.datasets[0].backgroundColor = $scope.getColor(chartData.datasets[0].data);
-                       layout.chart.update();
-                    }
-                    
-                });
-            });
-        }
-        };
+//        $scope.updateData = function () {
+//            if($scope.layouts !== 'undefined'){
+//            $scope.layouts.forEach(function (layout) {
+//                if ($scope.hoveringPanel === layout._id)
+//                    return;
+//                $scope.Data.get({"limit": 20, "sort": -1, "nodeID": layout.nodeID}, function (d) {
+//                   var chartData = layout.chart.chart.config.data;
+//                   var pd = $scope.parsePlotly(d.datas);
+//                   var test = pd[0].x.indexOf(chartData.labels[chartData.labels.length-1]);
+//                   if(test <= 0){return;}else{
+//                       pd[0].x= pd[0].x.slice(0, test);
+//                       pd[0].y=pd[0].y.slice(0, test);
+//                      
+//                       chartData.labels = chartData.labels.slice(pd[0].y.length, chartData.datasets[0].length);
+//                       chartData.datasets[0].data = chartData.datasets[0].data.slice(pd[0].y.length, chartData.datasets[0].data.length);
+//                       chartData.labels = chartData.labels.concat(pd[0].x);
+//                       chartData.datasets[0].data = chartData.datasets[0].data.concat(pd[0].y);
+//                        chartData.datasets[0].backgroundColor = $scope.getColor(chartData.datasets[0].data);
+//                       layout.chart.update();
+//                    }
+//                    
+//                });
+//            });
+//        }
+//        };
         $scope.getColor = function (n) {
                     var cd = [];
                     var highest = 100;//Math.max.apply(Math, n);
@@ -190,45 +198,6 @@
                     console.log(cd);
                     return cd;
                 };
-        $scope.initData = function (layout) {
-            $scope.plotlyData = [];
-            $scope.initPanelEvents(layout._id);
-            $scope.Data.get({"limit": 20, "nodeID": layout.nodeID}, function (d) {
-                $scope.data = d.datas;
-                $scope.plotlyData = $scope.parsePlotly(d.datas);
-                $scope.plotlyData[0].x.reverse();
-                $scope.plotlyData[0].y.reverse();
-                $scope.plotlyData[0].type = layout.graphType;
-                var ctx = $("." + layout._id + ' canvas');
-                    var myLineChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: $scope.plotlyData[0].x,
-                            datasets: [{
-                                    label: layout.valueType,
-                                    data: $scope.plotlyData[0].y,
-                                    backgroundColor: $scope.getColor($scope.plotlyData[0].y)
-                                }]},
-                        options: {
-                            maintainAspectRatio: false,
-                            responsive:true,
-                            scales: {
-                                xAxes: [{
-                                        ticks: {
-                                            callback: function (dataLabel, index) {
-                                                return dataLabel;
-                                            }
-                                        }
-                                    }],
-                                yAxes: [{
-                                        height: 250
-                                    }]
-                            }
-                        }
-                    });
-                    layout.chart = myLineChart;
-            });
-        };
         $scope.initPanelEvents = function (id) {
             $timeout(function () {
                 $("#" + id).parent().hover(function () {
@@ -240,7 +209,7 @@
         }
 
 //         $scope.initData();
-        $scope.interval($scope.updateData, 3000);
+//        $scope.interval($scope.updateData, 3000);
 
         $scope.parsePlotly = function (data) {
             var plotlyData = [{x: [], y: []}];
@@ -259,7 +228,9 @@
             $scope.removeNewPanel();
             $scope.activePanel = l;
             $scope.oldLayout = jQuery.extend({}, l);
+            var pos = $('.'+l._id).position();
             $scope.setter('editMode', true);
+            $('#displaySizer').css({'zIndex':9999,top:pos.top-75,height:0});
         }
         $scope.removeNewPanel = function () {
             $scope.setter("addingNode", null);
@@ -272,6 +243,14 @@
             } else {
                 $scope.newPanel.width = width;
             }
+        }
+        $scope.setGraphType = function(layout,type){
+            console.log(layout);
+            var t = layout;
+            t.graphType = type;
+            t.chart.type= type;
+            layout.chart.destroy();
+             $scope.getter('panelController')['initGraph'](t);
         }
         $scope.saveLayout = function (layout) {
             $scope.oldLayout = layout;
@@ -291,60 +270,81 @@
         $scope.createLayout = function (layout) {
             var newLayout = new Layouts($scope.newPanel);
             newLayout.boardID = $scope.boardID;
-            newLayout.nodeID = $scope.selectedNode;
+            console.log($('.selectedNode input')[0].value);
+            newLayout.nodeID = $('.selectedNode input')[0].value;
             newLayout.$save(function (response, err) {
                 $scope.layouts.push(response);
                 $scope.setter('addingNode', null);
                 $scope.setter('editMode', false);
-//            $scope.relayout(response,response.width);
+                $scope.getter('panelController')['initGraph'](response);
             });
             return null;
         }
         $scope.setSelected = function (d, cls) {
             $("." + cls, d.currentTarget).prop('checked', true);
             $scope.selectedDevice = cls;
-            $scope.selectedNode = $(".selectedNode input", d.currentTarget.context)[0].id;
+            $scope.selectedNode = $(".selectedNode input", d.currentTarget.context)[0].value;
         }
-
-//        $scope.dragginPanel = null;
-//        $scope.onStartDrag = function (e, u, l) {
-//            var dragIn = $(".panelcontainer." + l._id);
-//            $("#placeHolder").show();
-//            $scope.dragLayoutSize = l.width;
-////            $(dragIn).css({'position':'fixed'});
-//        }
-//        $scope.onDrop = function (e, u, l) {
-//            var graphs = $('canvas');
-//            $('.panelcontainer .panel').css({border: 'none'});
-//            var dragIn = $(".panelcontainer." + l._id);
-//            var currentDragging = $scope.layouts.indexOf(l);
-//            $(dragIn).removeAttr('style');
-//            var draggingOver = $scope.layouts.indexOf($scope.draggingPanel);
-//            console.log(currentDragging);
-//            var moved = $(graphs[currentDragging]).detach();
-//            var otherMoved = $(graphs[draggingOver]).detach();
-//            $('.' + $scope.layouts[currentDragging]._id + ' .panel-body').append(otherMoved);
-//            $('.' + $scope.layouts[draggingOver]._id + ' .panel-body').append(moved);
-//            var b = $scope.layouts[draggingOver];
-//            $scope.layouts[draggingOver] = $scope.layouts[currentDragging];
-//            $scope.layouts[currentDragging] = b;
-//            $scope.layouts[draggingOver].chart.update({});
-//        }
-//        $scope.movePanel = function (event, ui, layout, index) {
-//            $('.panelcontainer .panel').css({border: 'none'});
-//            var placeHolder = $("#placeHolder");
-//            var dragIn = ui.draggable.context;
-//            var dragOn = event.target;
-//            $('.panel', dragOn).css({border: 'solid 5px red'});
-//            $scope.draggingPanel = layout;
-//        }
+        $scope.saveAsPng = function(layout,callback){
+            var canvas = $('.'+layout._id+" canvas")[0];
+            var ctx = canvas.getContext('2d');
+            ctx.globalCompositeOperation='destination-over';
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+            
+            var myImage = canvas.toDataURL("image/jpeg", 10.0);
+            $('.'+layout._id+" .saveImage")[0].href = myImage;
+             $('.'+layout._id+" .saveImage")[0].download = 'myImage.jpeg';
+             //ctx.clearRect(0, 0, canvas.width, canvas.height);
+             $timeout(function(){
+                 layout.chart.destroy();
+                 $scope.panelController.initGraph(layout);
+             },500);
+        }
+        $scope.pickDate = function(layout){
+            $("#dateFrom").datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 3,
+                onClose: function (selectedDate) {
+                    $("#dateTo").datepicker("option", "minDate", selectedDate);
+                    $scope.defaultRange.s = new Date(selectedDate);
+                    $scope.Data.get({"created": {"$gte": $scope.defaultRange.s, "$lt": $scope.defaultRange.e},"limit": 100, "sort": -1, "nodeID": layout.nodeID}, function (d) {
+                      $scope.getter('panelController').updateGraph(layout,d.datas);
+                  });
+                }
+            });
+            $("#dateTo").datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 3,
+                onClose: function (selectedDate) {
+                    $("#dateFrom").datepicker("option", "maxDate", selectedDate);
+                    $scope.defaultRange.e = new Date(selectedDate);
+                  $scope.Data.get({"created": {"$gte": $scope.defaultRange.s, "$lt": $scope.defaultRange.e},"limit": 100, "sort": -1, "nodeID": layout.nodeID}, function (d) {
+                      $scope.getter('panelController').updateGraph(layout,d.datas);
+                  });
+                }
+            });
+             $("#date").show();
+                  $("#dateFrom").focus();
+           
+        }
         $scope.deleteLayout = function (layout) {
             var c = confirm("Are you sure you want to delete " + layout.title);
             if (c) {
-                delete layout.chart;
-                Layouts.remove(layout, function (response) {
+                var graphs = $('canvas');
+                var prev = $scope.layouts.indexOf(layout);
+                $(graphs[prev]).detach();
+                var g2 = $(graphs[prev+1]).detach();
+                var newL = jQuery.extend(true,{}, layout);
+                delete newL.chart;
+                Layouts.remove(newL, function (response) {
                     var index = $scope.layouts.indexOf(layout);
-                    $scope.layouts.splice(index, 1);
+//                   
+                    console.log($scope.layouts[1]._id);
+                    $('.'+$scope.layouts[1]._id+' .graphContainer.panel-body').append(g2);
+                     $scope.layouts.splice(index, 1);
                 });
             }
         }
@@ -352,15 +352,18 @@
 
     }
 
-    function checkUserStatus(http, j, s) {
-        http.get('api/users/me').success(function (d) {
-            if (d == "") {
-                j.reLogin();
-            } else {
-                s.authorized = true;
-                s.getBoard();
-            }
-        });
+    function checkUserStatus(MeanUser) {
+          if($.inArray('admin',MeanUser.user.roles) >=0 || $.inArray('developer',MeanUser.user.roles) >= 0 ) {return true;}
+            else {return false;}
+//        http.get('api/users/me').success(function (d) {
+//            console.log(d);
+//            if (d == "") {
+//                j.reLogin();
+//            } else {
+//                s.authorized = true;
+//                s.getBoard();
+//            }
+//        });
     }
 
 })();

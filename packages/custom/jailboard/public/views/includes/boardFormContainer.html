@@ -1,20 +1,20 @@
 
-<div  class="panelBar"><span class="title">Bedrijfsnaam - Casename</span><span ng-click="setPopup(false)"  class="right glyphicon glyphicon-remove"></span></div> 
+<div  class="panelBar"><span class="title">Bedrijfsnaam - Casename</span><span ng-click="setter(false,'popup')"  class="right glyphicon glyphicon-remove"></span></div> 
 <div id="boardFormContainer" >
         <form name="boardForm" ng-submit="board = createBoard(boardForm.$valid,board)" >
             
   <fieldset class="form-group">
-    <label for="exampleInputEmail1">  Company name</label>
-    <input type="text" ng-model="board.companyName" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+    <label for="companyName">  Company name</label>
+    <input type="text" ng-model="board.companyName" class="form-control" id="companyName" placeholder="Enter company name">
   </fieldset>
             
   <fieldset class="form-group">
-    <label for="exampleInputEmail1">Board name</label>
-    <input type="text" ng-model="board.name" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+    <label for="boardName">Board name</label>
+    <input type="text" ng-model="board.name" class="form-control" id="boardName" placeholder="Enter name of the board">
   </fieldset>
               <fieldset class="form-group">
                    <label for="exampleInputEmail1">Admin / Owner</label>
-     <div class="radio" ng-repeat="user in users">
+     <div class="radio" ng-repeat="user in users" >
     <label>
       <input type="radio" ng-model="board.ownerID"  name="optionsRadios" id="optionsRadios1" value="{{user.name}}" >
      {{user.name}}

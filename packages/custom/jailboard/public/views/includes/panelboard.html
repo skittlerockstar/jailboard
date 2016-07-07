@@ -1,41 +1,43 @@
 <div class="innerContainer" ng-controller="LayoutController as lao">
     <div class="row">
         <div class="col-xs-12 col-md-12">
-            <h1 class="title">{{board.companyName}} - {{board.name}}</h1>
+            <h1 class="title">{{board.companyName}} - {{board.name}} </h1>
         </div>
     </div>
     <div class="row" id="panel">
         <div class="col-xs-12 col-md-12">
             <div class="row" id="panels">
-                <div id="displaySizer" class="col-xs-12 col-md-12 " ng-class="{false:'hidden',true:''}[editMode]">
+                <div id="displaySizer"  style="z-index: 9999,top:0;" class="col-xs-12 col-md-12 " ng-class="{false:'hidden',true:''}[editMode]">
                     <h4>Display Size </h4>
 
                     <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                        <div ng-repeat="i in getNumber(12) track by $index" class="btn-group" role="group">
-                            <button type="button" ng-mouseOver="setPanelSize($index + 1)" class="btn" ng-class="activePanel.panelWidth == $index + 1 ? 'active btn-primary' : 'btn-default'">{{$index + 1}}</button>
+                        <div class="btn-group"  role="group">
+                            <button type="button" ng-click="setPanelSize(3)" class="btn col-xs-2" ng-class="activePanel.panelWidth == 3 ? 'active btn-primary' : 'btn-default'">1</button>
+                        </div>
+                        <div ng-repeat="i in getNumber(9) track by $index" class="btn-group btn-group-justified" role="group">
+                            <button type="button" ng-click="setPanelSize($index + 4)" class="btn col-xs-2" ng-class="activePanel.panelWidth == $index + 1 ? 'active btn-primary' : 'btn-default'">{{$index + 2}}</button>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div id="newPanel" ng-hide="addingNode == null" class='col-xs-12 col-md-{{newPanel.width}} panelcontainer panel panel-default' >
-
+                <div id="newPanel" ng-hide="addingNode == null" class='col-xs-12 col-md-{{newPanel.width}} ' >
+                    <div  class='panel panel-default'>
                     <div  class=' panel-heading'>
                         <h3 class="text-center">Create {{addingNode.nodeType}} display</h3>
                     </div>
                     <div class=" panel-body">
-                        <form name="layoutForm" ng-submit="layout = createLayout(layoutForm)" >
+                        <form name="layoutForm" ng-submit="layout = createLayout(layoutForm,$event)" >
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">Name </span>
                                 <input type="text" ng-model="newPanel.title" name='title' ng-init="newPanel.title = 'newPanel'" class="form-control" placeholder="e.g. office temperature"  aria-describedby="basic-addon1">
-                            </div>
-                            <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">Unit </span>
                                 <input type="text" ng-model="newPanel.valueType" name='valueType' ng-init="newPanel.valueType = ''" class="form-control" placeholder="e.g. Celsius"  aria-describedby="basic-addon1">
                             </div>
-
+                            
                             <div  ng-if="availableNodes.length !== 0">
-                                <div class=""><h4 class="text-center">Select device</h4>
+                                <div class=""><h4 class="text-center">Select device {{newPanel.nodeID}}</h4>
                                     <div ng-repeat="node in availableNodes" class="radio-inline">
-                                        <ul class="list-group " ng-click="setSelected($event, node.deviceID)">
+                                        <ul class="list-group" ng-click="setSelected($event, node.deviceID)">
                                             <li uib-tooltip=" Select {{addingNode.nodeType}} in device {{node.deviceID}}" class="list-group-item input-group " ng-class="node.deviceID == selectedDevice ? 'active' : (node.deviceID != selectedDevice ? '' : '')"  >
                                                 <label for="{{node.deviceID}}" class="list-group-item-heading ">
                                                     <button type='button' ng-class="node.deviceID == selectedDevice ? 'disabled btn-primary' : (node.deviceID != selectedDevice ? 'btn-default' : '')" class="btn "  >Device {{node.deviceID}} </button>
@@ -43,20 +45,30 @@
                                                 </label>
                                             </li>
                                             <li class="list-group-item" ng-class="node.deviceID != selectedDevice ? 'disabled' : (nodes.nodeType == addingNode.nodeType ? 'list-group-item-info selectedNode' : '')"  ng-repeat="nodes in node.nodes" >
-                                                {{nodes.nodeType}}  <input style="display:none;" ng-class="node.deviceID" ng-if="nodes.nodeType == addingNode.nodeType" type="radio" id="{{nodes._id}}" ng-model="newPanel.nodeID" name='nodeID' ng-init='newPanel.nodeID = nodes._id' value="nodes._id" />
+                                                {{nodes.nodeType}}  <input style="display:none;" ng-class="node.deviceID" ng-if="nodes.nodeType == addingNode.nodeType" type="radio" id="{{nodes._id}}" ng-model="newPanel.nodeID" name='nodeID'  value="{{nodes._id}}" />
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                <!--<h5>TODO graphtypes</h5>-->
-                                <!--                        <div class="input-group">
-                                                            <span class="input-group-addon" id="basic-addon1">@</span>
-                                                            <input type="text" class="form-control" placeholder="e.g. office temperature" aria-describedby="basic-addon1">
-                                </div>--><input type="hidden" ng-model="newPanel.width" name='panelWidth' ng-init='newPanel.width = 6' value="{{panelSize}}" />
+                                <h5>chart types</h5>
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button ng-click="newPanel.graphType = 'bar'" type="button" class='btn btn-primary'>Bar</button>
+                                    <button ng-click="newPanel.graphType = 'line'"  type="button" class='btn btn-primary'>Line</button>
+                                    <button ng-click="newPanel.graphType = 'doughnut'"  type="button" class='btn btn-primary'>Doughnut</button>
+                                    <button ng-click="newPanel.graphType = 'scatter'"  type="button" class='btn btn-primary'>Scatter</button>
+                                    <button ng-click="newPanel.graphType = 'horizontalBar'"  type="button" class='btn btn-primary'>Horizontal bar</button>
+                                    <button ng-click="newPanel.graphType = 'polarArea'"  type="button" class='btn btn-primary'>Polar Area</button>
+                                    <button ng-click="newPanel.graphType = 'bubble'"  type="button" class='btn btn-primary'>Bubble</button>
+                                    <button ng-click="newPanel.graphType = 'pie'"  type="button" class='btn btn-primary'>Pie</button>
+                                    <button ng-click="newPanel.graphType = 'scale'"  type="button" class='btn btn-primary'>Scale</button>
+                                </div>
+                                <canvas id="previewChart"></canvas>
+                                <input type="hidden" ng-model="newPanel.width" name='panelWidth' ng-init='newPanel.width = 6' value="{{panelSize}}" />
                                 <input type="submit"  class="btn btn-primary" class="form-control" value="save display">
 
                                 </form>
                             </div>
+                    </div>
                     </div>
                 </div>
 <!--                loadingscreen
@@ -66,29 +78,51 @@
                     </div>
                 </div>-->
                 <!--All layouts displayed-->
+                <a id="downloadImage"></a>
                 <div ng-repeat="layout in layouts track by $index" class="col-xs-12 col-md-{{layout.width}} {{layout._id}} panelcontainer">  <!--data-drop="true" data-drag="true"  jqyoui-droppable="{index: {{$index}},onOver:'movePanel(layout)'}" jqyoui-draggable="{index: {{$index}}, onStart:'onStartDrag(layout)',onStop:'onDrop(layout)'}"-->
 
-                    <div  class="panel panel-default" ng-class="{false:'',true:'collapsed'}[collapsed]">
+                    <div  class="panel panel-default" ng-class="{false:'',true:'collapsed'}[getter('collapsed')]">
                         <div class="panel-heading panelControlls">
                             <h3 class="left">
                                     <span  ng-show="activePanel != layout" >{{layout.title}}</span>
                                 </h3>
                                 <input ng-model="layout.title" class="panelTitle"  ng-show="activePanel == layout" ng-value="activePanel.title" />
-                                <div class="editLayout">
-                                   
-                                    <span  ng-show="activePanel != layout" ng-click="setActivePanel(layout)">Edit</span>
-                                    <span  ng-show="activePanel != layout" ng-click="deleteLayout(layout)">Delete</span>
-                                    <span  ng-show="activePanel == layout" ng-click="saveLayout(layout)">Save</span>
-                                    <span  ng-show="activePanel == layout" ng-click="exitEditMode(layout)">Undo</span>
+                                
+                                <div class="editLayout btn-group">
+                                     
+                                    <a class="btn btn-default glyphicon glyphicon-calendar" uib-tooltip="Select Date" ng-show="activePanel != layout" ng-click="pickDate(layout)">
+                                    </a>
+                                    <div id="date" style="display:none; float:left;">
+                                    <input type="text" id="dateFrom" />
+                                    <label style="float:left; line-height: 30px; background-color:white; padding:0 10px;"> To </label>
+                                    <input type="text" id="dateTo">
+                                    </div>
+                                    <a ng-if="isAdmin"class="btn btn-primary glyphicon glyphicon-pencil" uib-tooltip="Edit" ng-show="activePanel != layout" ng-click="setActivePanel(layout)"></a>
+                                    <a ng-if="isAdmin" class="btn btn-primary glyphicon glyphicon-remove" uib-tooltip="Delete" ng-show="activePanel != layout" ng-click="deleteLayout(layout)"></a>
+                                    <a ng-if="isAdmin" class="btn btn-primary glyphicon glyphicon-ok" uib-tooltip="Save" ng-show="activePanel == layout" ng-click="saveLayout(layout)"></a>
+                                    <a  ng-if="isAdmin" class="btn btn-primary glyphicon glyphicon-share-alt" uib-tooltip="Undo" ng-show="activePanel == layout" ng-click="exitEditMode(layout)"></a>
+                                    <a  class="btn btn-primary glyphicon glyphicon-picture  saveImage"  uib-tooltip="Save Png" ng-show="activePanel != layout" ng-click="saveAsPng(layout)"></a>
                                      <!--<div class="movePanel drag-handle"  ><span class="glyphicon glyphicon-move"></span></div>-->
                                 </div>
                         </div>
-                        <div class=" panel-body">
-                            <input ng-model="layout.valueType" class="valueType"  ng-show="activePanel == layout" ng-value="activePanel.valueType" />
-                          <canvas height="250" class="plotlyLayout"  ng-init="initData(layout)"  >
-
+                        <div class=" graphContainer panel-body">
+                            <input ng-model="layout.valueType" class="valueType"  ng-show="activePanel == layout" ng-value="activePanel.valueType" /> 
+                              <div ng-show="activePanel == layout" class="btn-group" role="group" aria-label="...">
+                                    <button ng-click="setGraphType(layout,'bar')" type="button" class='btn btn-primary'>Bar</button>
+                                    <button ng-click="setGraphType(layout,'line')" type="button" class='btn btn-primary'>Line</button>
+                                    <button ng-click= "setGraphType(layout,'doughnut')" type="button" class='btn btn-primary'>Doughnut</button>
+                                    <button ng-click="setGraphType(layout,'scatter')"  type="button" class='btn btn-primary'>Scatter</button>
+                                    <button ng-click="setGraphType(layout,'horizontalBar')"  type="button" class='btn btn-primary'>Horizontal bar</button>
+                                    <button ng-click="setGraphType(layout,'polarArea')" type="button" class='btn btn-primary'>Polar Area</button>
+                                    <button ng-click="setGraphType(layout,'bubble')" type="button" class='btn btn-primary'>Bubble</button>
+                                    <button ng-click="setGraphType(layout,'pie')"  type="button" class='btn btn-primary'>Pie</button>
+                                    <button ng-click="setGraphType(layout,'scale')"  type="button" class='btn btn-primary'>Scale</button>
+                                </div>
+                                <canvas ng-controller="GraphControll as gc"  class="plotlyLayout"  ng-init="initGraph(layout)"  >
+                              
                                 </canvas>
                         </div>
+                              
                     </div>
                 </div>
                 <!--<div id='placeHolder' class=' col-xs-12 col-md-{{dragLayoutSize}}'><div class='clearfix'></div> </div>-->

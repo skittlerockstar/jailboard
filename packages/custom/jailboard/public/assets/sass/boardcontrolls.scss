@@ -19,15 +19,15 @@ and open the template in the editor.
         padding: 50px;
         padding-top: 30px;
         margin-top: -35px;
+
         #addDataSource{padding:0; width:100%;}
         .left,.right{
             &:hover{
                 .title{
-                     box-shadow: 15px 16px 4px -15px $themeColor;
+                    box-shadow: 15px 16px 4px -15px $themeColor;
                 }
             }
             float:left;
-            width:50%;
             padding:0 20px;
             .title{
                 border-bottom: 2px solid gray;
@@ -53,7 +53,7 @@ and open the template in the editor.
                     background-color:$darkColor;
                     color:whitesmoke;
                     cursor:pointer;
-                      border:solid 3px $darkColor;
+                    border:solid 3px $darkColor;
                     &:hover{
                         background-color:whitesmoke;
                         border:solid 3px $themeColor;
@@ -61,24 +61,23 @@ and open the template in the editor.
                         transform-origin: center;
                         color:$darkColor;
                     }
-                    
+
                 }
                 .addDataSourceBtn.glyphicon.glyphicon-plus{
                     &:hover{ 
-                       border-color: $themeColor2;
+                        border-color: $themeColor2;
                     }
-                 }
-                
+                }
+
             }
         }
         .right.important{
-            overflow-y: scroll;
             height: 310px;
             &:hover{
                 .title{
                     box-shadow: -15px 16px 4px -15px $themeColor2;
                 }
-                
+
             }
             .title{
                 box-shadow: -15px 16px 4px -15px gray;
@@ -98,17 +97,16 @@ and open the template in the editor.
             }
             fieldset{
                 float:left;
-                width:50%;
-                padding-left: 20%;
+                /*                padding-left: 20%;*/
             }
             form{
                 clear:left;
             }
             label{  
                 &.disabled{
-                        cursor:not-allowed;
-                        opacity:.5;
-                    }
+                    cursor:not-allowed;
+                    opacity:.5;
+                }
                 cursor:pointer;
                 margin-left:-30px;
                 &:not(.disabled):hover{
@@ -123,11 +121,11 @@ and open the template in the editor.
                     color:$darkColorText !important;
                 }
                 .glyphicon{
-                    
+
                     border:none;
                     font-size: 20px;
                     border:solid 3px $darkColor;
-                      transform-origin: center;
+                    transform-origin: center;
                     background-color: $darkColor;
                     pointer-events: none;
                     color: whitesmoke;

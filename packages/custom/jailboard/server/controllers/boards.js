@@ -116,8 +116,7 @@ module.exports = function(Boards) {
          * List of Boards
          */
         all: function(req, res) {
-
-            Board.find({}).sort('-created').populate('user', 'name username').exec(function(err, boards) {
+            Board.find(req.query).sort('-created').populate('user', 'name username').exec(function(err, boards) {
                 if (err) {
                     return res.status(500).json({
                         error: 'Cannot list the boards'

@@ -71,7 +71,7 @@ Jailboard.angularDependencies(['ngDragDrop']);
 //  });
 Jailboard.aggregateAsset('css', 'boardcontrolls.css');
   Jailboard.aggregateAsset('js', 'dist/Chart.bundle.min.js');
-    Jailboard.aggregateAsset('js','plotly-latest.min.js');
+//    Jailboard.aggregateAsset('js','plotly-latest.min.js');
   Jailboard.aggregateAsset('css', 'jailboard.css');
     Jailboard.aggregateAsset('css', 'boardmanager.css');
     

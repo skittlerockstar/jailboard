@@ -1,20 +1,20 @@
 <div id="controlls">
-    <div class="left">
+<!--    <div class="left">
         <h1 class='title'>{{board.name}} Controlls</h1>
         <div id="save"><span class='vertA' > Save Board</span><span class="glyphicon glyphicon-open-file"></span></div>
         <div id="load"><span class='vertA'> Load Board</span><span class="glyphicon glyphicon-save-file"></span></div>
         <div id="add"><span class='vertA'> Add Panel</span><span class="glyphicon glyphicon-plus"></span></div>
-    </div>
-    <div class="right important">
+    </div>-->
+    <div class="col-xs-12 right important">
         <h1 class='title'>Nodes</h1>
         <div id="add" ng-click="setter('addDataSource',!getter('addDataSource'))">
             <span class='vertA'> Add Node</span>
-            <span class="glyphicon addDataSourceBtn" ng-class="{false:'glyphicon-plus',true:'glyphicon-minus'}[addDataSource]"></span>
+            <span style="margin-left:0;" class="glyphicon addDataSourceBtn" ng-class="{false:'glyphicon-plus',true:'glyphicon-minus'}[addDataSource]"></span>
         </div>
         <div id='addDataSource' ng-class='{false:"hide",true:"show"}[addDataSource]'>
             <form class=''>
-                <fieldset ng-repeat="node in types" ng-click="addNode(node)" ng-attr-uib-tooltip="{{node.available === true ? null : 'no '+node.nodeType+' detected '}}"  class="form-group">
-                    <label ng-class="{false:'disabled',true:''}[node.available]" for='motion'><span class='glyphicon glyphicon-{{node.glyph}}'></span>
+                <fieldset class="col-xs-12 col-md-3" ng-repeat="node in types" ng-click="addNode(node)" ng-attr-uib-tooltip="{{node.available === true ? null : 'no '+node.nodeType+' detected '}}"  class="form-group">
+                    <label style="padding:5px;" ng-class="{false:'disabled',true:''}[node.available]" for='motion'><span class='glyphicon glyphicon-{{node.glyph}}'></span>
                         {{node.nodeType}}
                     </label>
                      </fieldset>

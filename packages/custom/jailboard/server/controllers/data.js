@@ -157,16 +157,19 @@ module.exports = function(DataSources) {
             var limit = req.query.limit || null;
             var sort = req.query.sort || -1;
             var nodeID = req.query.nodeID || null;
+            var range = req.query.created || null;
             limit = parseInt(limit);
-            Datas.find({"nodeID":nodeID}).sort({'created':-1}).limit(limit).exec(function(err, data) {
+            if(range !=null) {range=JSON.parse(range)}else{
+                range = {"$lt":new Date()};
+            }
+            Datas.find({"created":range,"nodeID":nodeID}).sort({'created':-1}).limit(limit).exec(function(err, data) {
                 if (err) {
+                    console.log(err);
                     return res.status(500).json({
                         error: 'Cannot list the data'
                     });
                 }
-                console.log('');
-                console.log(data);
-                console.log('');
+                data.reverse();
                 res.json({'datas':data});
             });
 

@@ -4,7 +4,7 @@
   angular
     .module('mean.jailboard')
     .config(jailboard).config(['$viewPathProvider', function($viewPathProvider) {
-  $viewPathProvider.override('system/views/index.html', 'jailboard/views/index.html');
+        $viewPathProvider.override('system/views/index.html', 'jailboard/views/boards.html');
 }]);
 
 
@@ -14,9 +14,6 @@
     $stateProvider.state('board by id', {
       url: '/boards/:boardID',
       templateUrl: './jailboard/views/index.html',
-      requiredCircles: {
-          circles: ['admin']
-        }
     });
     $stateProvider.state('index', {
       url: '/auth/login',
@@ -29,7 +26,7 @@
       url: '/boards',
       templateUrl: './jailboard/views/boards.html',
       requiredCircles: {
-          circles: ['admin']
+          circles: ['authorized']
         }
     });
     $stateProvider.state('data', {

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.admin').controller('UsersController', ['$scope', 'Global', 'Menus', '$rootScope', '$http', 'Users', 'Circles',
-    function ($scope, Global, Menus, $rootScope, $http, Users, Circles) {
+angular.module('mean.admin').controller('UsersController', ['$scope', 'Global', 'Menus', '$rootScope', '$http', 'Users','Boards', 'Circles',
+    function ($scope, Global, Menus, $rootScope, $http, Users, Boards, Circles) {
 
         $scope.global = Global;
         $scope.user = {};
@@ -62,9 +62,9 @@ angular.module('mean.admin').controller('UsersController', ['$scope', 'Global', 
                 //CUSTOM remove user from user list when dev or logged in
                 var usersToRemove = [];
                     users.forEach(function (u, n) {
-                    if (u.roles.indexOf("developer") > -1 || d.username == u.username) {
-                        usersToRemove.push(n);
-                    }
+//                    if (u.roles.indexOf("developer") > -1 || d.username == u.username) {
+//                        usersToRemove.push(n);
+//                    }
                 });
                 
                 usersToRemove.reverse();

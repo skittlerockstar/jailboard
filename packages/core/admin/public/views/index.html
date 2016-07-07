@@ -4,19 +4,18 @@
         <ul class="nav">
             <li class="stable title" >
                  <a>
-                     <span  class="glyphicon glyphicon-bookmark"></span>
-                     <div class="showbox header "  mean-token="item.title">
+                     <!--<span  class="glyphicon glyphicon-bookmark"></span>-->
+<!--                     <div class="showbox header "  mean-token="item.title">
                          <h5>ADMIN PANEL<span class="glyphicon glyphicon-bookmark"></span></h5>
-                     </div>
+                     </div>-->
                  </a>
             </li>
             <li class="stable" data-ng-repeat="item in menus.admin" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}" ui-sref='{{item.link}}'>
                 <a  href="">
-                    <span data-ng-show="item.icon" class="glyphicon glyphicon-{{item.icon}}"></span>
-                    <div class="showbox" mean-token="item.title">{{item.title}}</div>
+                    <span data-ng-show="item.icon" uib-tooltip="{{item.title}}" class="glyphicon glyphicon-{{item.icon}}"></span>
+                    <div class="showbox" mean-token="item.title" >{{item.title}}</div>
                 </a>
             </li>
-
         </ul>
         <div class="glyphicon open-icon" ng-click="openWide=!openWide" ng-class="{true: 'glyphicon-menu-left', false: 'glyphicon-menu-right'}[openWide]"></div>
         <div class="wrapper-logo"> </div>

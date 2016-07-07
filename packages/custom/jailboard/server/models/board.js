@@ -19,6 +19,10 @@ var BoardSchema = new Schema({
     ref: 'User',
     required: true
   },  
+  connectedUsers:{
+    type: Array,
+    required: false
+  },  
   name:{
     type: String,
     required: true
